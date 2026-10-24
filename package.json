@@ -21,7 +21,7 @@
     "next": "^15",
     "react": "^19",
     "react-dom": "^19",
-    "@prisma/client": "^6",
+    "@prisma/client": "^7",
     "next-auth": "^4",
     "bcryptjs": "^2",
     "zustand": "^5",
