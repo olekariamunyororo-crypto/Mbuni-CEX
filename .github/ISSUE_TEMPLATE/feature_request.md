@@ -1,20 +1,35 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: enhancement
-assignees: ''
-
+name: ✨ Feature Request
+about: Suggest a new feature or improvement
+title: "[Feature] "
+labels: ["enhancement", "triage"]
+assignees: []
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+## Problem
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+<!-- What problem does this feature solve? "I'm frustrated when..." -->
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+## Proposed solution
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+<!-- Describe the solution you'd like. Be specific. -->
+
+## Alternatives considered
+
+<!-- What other approaches did you consider? Why did you reject them? -->
+
+## Mockup / Sketch
+
+<!-- If it's a UI feature, drop a quick sketch or screenshot of a similar pattern. -->
+
+## Scope
+
+- [ ] Frontend only
+- [ ] Backend / API
+- [ ] Database schema change
+- [ ] Infra / deployment
+- [ ] Breaking change
+
+## Additional context
+
+<!-- Anything else worth knowing? -->

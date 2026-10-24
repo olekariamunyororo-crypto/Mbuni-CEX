@@ -1,0 +1,105 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", ":semanticCommits", ":semanticCommitScope(deps)", ":dependencyDashboard", ":timezone(Europe/Amsterdam)"],
+  "schedule": ["before 9am on Monday"],
+  "labels": ["dependencies", "automated"],
+  "rangeStrategy": "bump",
+  "commitMessagePrefix": "deps",
+  "commitMessageTopic": "{{depName}}",
+  "prConcurrentLimit": 10,
+  "prHourlyLimit": 2,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 9am on the first day of the month"]
+  },
+
+  "packageRules": [
+    {
+      "description": "Group all non-major updates together to reduce PR noise",
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "groupName": "minor + patch (non-major)",
+      "semanticCommitType": "chore",
+      "automerge": false
+    },
+    {
+      "description": "Critical frameworks — open separate PRs for major bumps so they get reviewed individually",
+      "matchPackagePatterns": ["^next$", "^next-auth$", "^react$", "^react-dom$", "^@prisma/client$", "^prisma$"],
+      "matchUpdateTypes": ["major"],
+      "labels": ["dependencies", "major", "needs-review"],
+      "groupName": null,
+      "automerge": false
+    },
+    {
+      "description": "Group all React ecosystem updates (excluding major React itself)",
+      "matchPackagePatterns": ["^react-", "^@reactuses/", "^@tanstack/react-"],
+      "excludePackageNames": ["react-dom"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "react ecosystem"
+    },
+    {
+      "description": "Group all Radix UI primitives",
+      "matchPackagePatterns": ["^@radix-ui/"],
+      "groupName": "radix-ui"
+    },
+    {
+      "description": "Group all shadcn/ui-related deps",
+      "matchPackagePatterns": ["^class-variance-authority$", "^clsx$", "^tailwind-merge$", "^cmdk$", "^vaul$", "^sonner$", "^lucide-react$"],
+      "groupName": "shadcn/ui"
+    },
+    {
+      "description": "Group all testing deps",
+      "matchPackagePatterns": ["^vitest$", "^@playwright/test$", "^fast-check$", "^husky$", "^lint-staged$"],
+      "groupName": "testing"
+    },
+    {
+      "description": "Group all Docker base image updates",
+      "matchDatasources": ["docker"],
+      "groupName": "docker base images",
+      "schedule": ["before 9am on the first day of the month"]
+    },
+    {
+      "description": "Group all GitHub Actions updates",
+      "matchDatasources": ["github-tags"],
+      "groupName": "github actions",
+      "semanticCommitType": "ci"
+    },
+    {
+      "description": "Auto-merge patch updates for devDependencies after CI passes",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch"],
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true,
+      "labels": ["dependencies", "automerge"]
+    },
+    {
+      "description": "Don't auto-merge runtime deps — always require manual review",
+      "matchDepTypes": ["dependencies"],
+      "automerge": false
+    }
+  ],
+
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": ["security", "automated"],
+    "schedule": ["at any time"],
+    "prConcurrentLimit": 5
+  },
+
+  "regexManagers": [
+    {
+      "description": "Update Bun version in Dockerfile + GitHub Actions",
+      "fileMatch": ["^Dockerfile$", "^\\.github/workflows/[^/]+\\.ya?ml$"],
+      "matchStrings": ["oven/bun:(?<currentValue>[^\\s]+)", "bun-version: (?<currentValue>[^\\s]+)"],
+      "depNameTemplate": "oven/bun",
+      "datasourceTemplate": "docker"
+    },
+    {
+      "description": "Update Node version in GitHub Actions",
+      "fileMatch": ["^\\.github/workflows/[^/]+\\.ya?ml$"],
+      "matchStrings": ["node-version: (?<currentValue>[^\\s]+)"],
+      "depNameTemplate": "node",
+      "datasourceTemplate": "node"
+    }
+  ]
+}

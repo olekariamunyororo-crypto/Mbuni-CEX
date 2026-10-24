@@ -1,33 +1,52 @@
 ---
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: bug
-assignees: ''
-
+name: 🐛 Bug Report
+about: Something isn't working as expected
+title: "[Bug] "
+labels: ["bug", "triage"]
+assignees: []
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+## Describe the bug
 
-**To Reproduce**
+<!-- A clear description of what the bug is. -->
+
+## To reproduce
+
 Steps to reproduce the behavior:
+
 1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+2. Click on '...'
+3. See error
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+## Expected behavior
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+<!-- What you expected to happen. -->
 
-**Environment**
- - OS: [e.g. macOS, Linux, Windows]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
- - Node/Bun version
+## Actual behavior
 
-**Additional context**
-Add any other context about the problem here. Console output if available.
+<!-- What actually happened. -->
+
+## Screenshots / Recordings
+
+<!-- If applicable, drop a screenshot or short recording here. -->
+
+## Environment
+
+- OS: [e.g. macOS 14, Windows 11, iOS 17]
+- Browser: [e.g. Chrome 130, Safari 17, Firefox 131]
+- Device: [e.g. Desktop, iPhone 14]
+- Mbuni CEX version/commit: [e.g. v1.0.0, or `git rev-parse --short HEAD`]
+- Logged in: [yes / no]
+- View: [e.g. Trading terminal, Wallet, Admin]
+
+## Console output
+
+<!-- Paste any browser console errors here. -->
+
+```
+(paste here)
+```
+
+## Additional context
+
+<!-- Anything else relevant? DB state, network conditions, etc. -->

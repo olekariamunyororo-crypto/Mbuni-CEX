@@ -1,14 +1,21 @@
-import type { StorybookConfig } from '@storybook/nextjs';
+import type { StorybookConfig } from "@storybook/nextjs";
 
+// Storybook v10 — addons are merged into the core `storybook` package.
+// Import them as `storybook/addon-essentials` etc., not `@storybook/addon-essentials`.
 const config: StorybookConfig = {
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: ["../src/**/*.stories.@(ts|tsx|mdx)"],
   addons: [
-    '@storybook/addon-essentials',
+    "storybook/addon-essentials",
+    "storybook/addon-interactions",
   ],
   framework: {
-    name: '@storybook/nextjs',
+    name: "@storybook/nextjs",
     options: {},
   },
-  staticDirs: ['../public'],
+  docs: {
+    autodocs: "tag",
+  },
+  staticDirs: ["../public"],
 };
+
 export default config;

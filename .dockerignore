@@ -1,39 +1,73 @@
-# Dependencies
+# Things to exclude from the Docker build context — keeps image small + builds fast.
+# Anything not needed at runtime or build time should be here.
+
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# Dependencies (re-installed inside the image)
 node_modules
 .pnp
 .pnp.js
 
-# Build
+# Build outputs
 .next
 out
-build
 dist
+build
 
-# Env
-.env
-.env.local
-.env.*.local
-
-# Debug
+# Local dev artifacts
+*.log
+dev.log
+server.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnpm-debug.log*
 
-# IDE
-.idea
+# Env files (NEVER bake secrets into images)
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.*.local
+
+# Database (SQLite file — runtime data, not source)
+db
+*.db
+*.db-journal
+
+# IDE / editor
 .vscode
+.idea
 *.swp
 *.swo
-
-# OS
 .DS_Store
-Thumbs.db
 
-# Test
+# Test / coverage
 coverage
-playwright-report
-test-results
+.nyc_output
+*.lcov
 
-# Misc
-*.tsbuildinfo
-next-env.d.ts
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+docker-compose.*.yml
+
+# CI
+.github
+.gitlab-ci.yml
+
+# Docs (not needed at runtime — keeps image lean)
+README.md
+CONTRIBUTING.md
+LICENSE
+docs
+*.md
+
+# Infra (not needed inside the container)
+infra
+Caddyfile
