@@ -25,7 +25,7 @@
     "next-auth": "^4",
     "bcryptjs": "^2",
     "zustand": "^5",
-    "framer-motion": "^11",
+    "framer-motion": "^14",
     "lucide-react": "^0.400",
     "class-variance-authority": "^0.7",
     "clsx": "^2",
