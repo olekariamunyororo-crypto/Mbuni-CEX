@@ -23,7 +23,7 @@
     "react-dom": "^19",
     "@prisma/client": "^6",
     "next-auth": "^4",
-    "bcryptjs": "^2",
+    "bcryptjs": "^3",
     "zustand": "^5",
     "framer-motion": "^11",
     "lucide-react": "^0.400",
