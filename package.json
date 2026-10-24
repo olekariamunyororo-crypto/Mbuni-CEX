@@ -29,7 +29,7 @@
     "lucide-react": "^0.400",
     "class-variance-authority": "^0.7",
     "clsx": "^2",
-    "tailwind-merge": "^2"
+    "tailwind-merge": "^3"
   },
   "devDependencies": {
     "@types/node": "^22",
