@@ -1,5 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// Mbuni CEX — Prisma schema
+// Auth models + durable trading ledger (Order / Trade / Balance / TradingPair)
 
 generator client {
   provider = "prisma-client-js"
@@ -25,6 +25,8 @@ model User {
   accounts           Account[]
   sessions           Session[]
   onboarding         Onboarding?
+  balances           Balance[]
+  orders             Order[]
 }
 
 model Account {
@@ -64,12 +66,84 @@ model VerificationToken {
 model Onboarding {
   id              String   @id @default(cuid())
   userId          String   @unique
-  experience      String   @default("INTERMEDIATE") // NOVICE / INTERMEDIATE / PRO / INSTITUTIONAL
-  followedPairs   String   @default("") // comma-separated pair symbols
+  experience      String   @default("INTERMEDIATE")
+  followedPairs   String   @default("")
   enable2FA       Boolean  @default(false)
   passkeyEnrolled Boolean  @default(false)
   acceptedTerms   Boolean  @default(false)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// --- Durable trading ledger ---
+
+model TradingPair {
+  id            String   @id @default(cuid())
+  symbol        String   @unique
+  baseAsset     String
+  quoteAsset    String
+  priceDecimals Int      @default(2)
+  baseDecimals  Int      @default(8)
+  tickSize      String   @default("0.01")
+  minQty        String   @default("0.0001")
+  status        String   @default("ACTIVE")
+  createdAt     DateTime @default(now())
+  orders        Order[]
+  trades        Trade[]
+}
+
+model Balance {
+  id        String   @id @default(cuid())
+  userId    String
+  asset     String
+  available String   @default("0")
+  locked    String   @default("0")
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, asset])
+  @@index([userId])
+}
+
+model Order {
+  id           String   @id @default(cuid())
+  userId       String
+  pairId       String
+  side         String
+  type         String
+  price        String?
+  qty          String
+  filledQty    String   @default("0")
+  remainingQty String
+  avgFillPrice String?
+  status       String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id])
+  pair         TradingPair @relation(fields: [pairId], references: [id])
+  buyTrades    Trade[]  @relation("BuyOrder")
+  sellTrades   Trade[]  @relation("SellOrder")
+
+  @@index([userId, status])
+  @@index([pairId, status])
+}
+
+model Trade {
+  id           String   @id @default(cuid())
+  pairId       String
+  price        String
+  qty          String
+  buyOrderId   String
+  sellOrderId  String
+  buyerUserId  String
+  sellerUserId String
+  createdAt    DateTime @default(now())
+  pair         TradingPair @relation(fields: [pairId], references: [id])
+  buyOrder     Order    @relation("BuyOrder", fields: [buyOrderId], references: [id])
+  sellOrder    Order    @relation("SellOrder", fields: [sellOrderId], references: [id])
+
+  @@index([pairId, createdAt])
+  @@index([buyerUserId])
+  @@index([sellerUserId])
 }
