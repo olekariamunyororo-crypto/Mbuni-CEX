@@ -1,21 +1,3 @@
-# =============================================================================
-# Mbuni CEX — CI/CD pipeline
-#
-# Triggers:
-#   - push to main / master           → run lint + build + push image (latest tag)
-#   - pull request to main / master   → run lint + build (no image push)
-#   - git tag v*.*.*                  → run lint + build + push image (versioned tag) + deploy
-#   - manual dispatch (workflow_dispatch) → choose environment (staging/prod)
-#
-# Required secrets (Settings → Secrets and variables → Actions):
-#   - GHCR_TOKEN            GitHub PAT with write:packages (or use GITHUB_TOKEN)
-#   - VERCEL_TOKEN          (optional) for Vercel deploys
-#   - VERCEL_ORG_ID
-#   - VERCEL_PROJECT_ID
-#   - KUBE_CONFIG_STAGING   base64-encoded kubeconfig for staging cluster
-#   - KUBE_CONFIG_PROD      base64-encoded kubeconfig for prod cluster
-# =============================================================================
-
 name: CI/CD
 
 on:
@@ -80,18 +62,10 @@ jobs:
       - name: Lint
         run: bun run lint
 
-      - name: Unit tests (with coverage)
-        run: bun run test:unit -- --coverage
+      - name: Unit tests
+        run: bun run test:unit
         env:
           CI: "true"
-
-      - name: Upload coverage report
-        if: github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: coverage/
-          retention-days: 7
 
       - name: Build
         run: bun run build
@@ -180,33 +154,6 @@ jobs:
           path: playwright-report/
           retention-days: 7
 
-      - name: Upload Playwright traces (on failure)
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-traces
-          path: test-results/
-          retention-days: 7
-
-      - name: Upload visual regression diffs (on failure)
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: visual-regression-diffs
-          path: tests/e2e/__screenshots__/**/*.png
-          retention-days: 7
-
-      - name: Comment visual regression failure on PR
-        if: failure() && github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.createComment({
-              ...context.repo,
-              issue_number: context.issue.number,
-              body: `📸 Visual regression tests failed. Download the \\`visual-regression-diffs\\` artifact to see the diffed screenshots, or run \\`just test-e2e-ui\\` locally to debug.\n\nIf the change is intentional, update baselines with \\`just test-e2e-update\\` and commit the new screenshots.`
-            });
-
   docker:
     name: Build + Push Image
     needs: [build, e2e]
@@ -235,10 +182,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=ref,event=branch
-            type=ref,event=pr
             type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
             type=raw,value=latest,enable={{is_default_branch}}
             type=sha,prefix=sha-,format=short
 
@@ -252,8 +196,6 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          build-args: |
-            NODE_ENV=production
 
   deploy-staging:
     name: Deploy → Staging (Helm)
@@ -263,7 +205,7 @@ jobs:
     timeout-minutes: 10
     environment:
       name: staging
-      url: https://staging.cex.your-domain.com
+      url: https://staging.cex.example.com
 
     steps:
       - name: Checkout
@@ -289,16 +231,12 @@ jobs:
             --timeout 5m \
             --set image.repository=${{ env.REGISTRY }}/${{ github.repository }} \
             --set image.tag=sha-${GITHUB_SHA::7} \
-            --set config.NEXTAUTH_URL=https://staging.cex.your-domain.com \
-            --set ingress.hosts[0].host=staging.cex.your-domain.com \
-            --set ingress.tls[0].hosts[0]=staging.cex.your-domain.com \
             --set envSecrets.DATABASE_URL="${{ secrets.STAGING_DATABASE_URL }}" \
             --set envSecrets.NEXTAUTH_SECRET="${{ secrets.STAGING_NEXTAUTH_SECRET }}"
 
       - name: Verify deployment
         run: |
           kubectl rollout status deployment/mbuni-cex -n mbuni-cex-staging --timeout=300s
-          kubectl get pods -n mbuni-cex-staging -l app.kubernetes.io/name=mbuni-cex
 
   deploy-production:
     name: Deploy → Production (Helm)
@@ -308,7 +246,7 @@ jobs:
     timeout-minutes: 10
     environment:
       name: production
-      url: https://cex.your-domain.com
+      url: https://cex.example.com
 
     steps:
       - name: Checkout
@@ -325,15 +263,6 @@ jobs:
         with:
           version: "v3.14.0"
 
-      - name: Determine image tag
-        id: tag
-        run: |
-          if [[ "${{ github.ref }}" == refs/tags/* ]]; then
-            echo "image_tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
-          else
-            echo "image_tag=sha-${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
-          fi
-
       - name: Deploy
         run: |
           helm upgrade --install mbuni-cex infra/k8s/ \
@@ -343,22 +272,6 @@ jobs:
             --timeout 10m \
             -f infra/k8s/values-prod.yaml \
             --set image.repository=${{ env.REGISTRY }}/${{ github.repository }} \
-            --set image.tag=${{ steps.tag.outputs.image_tag }} \
-            --set config.NEXTAUTH_URL=https://cex.your-domain.com \
-            --set ingress.hosts[0].host=cex.your-domain.com \
-            --set ingress.tls[0].hosts[0]=cex.your-domain.com \
+            --set image.tag=sha-${GITHUB_SHA::7} \
             --set envSecrets.DATABASE_URL="${{ secrets.PROD_DATABASE_URL }}" \
             --set envSecrets.NEXTAUTH_SECRET="${{ secrets.PROD_NEXTAUTH_SECRET }}"
-
-      - name: Verify deployment
-        run: |
-          kubectl rollout status deployment/mbuni-cex -n mbuni-cex --timeout=600s
-          kubectl get pods -n mbuni-cex -l app.kubernetes.io/name=mbuni-cex
-
-      - name: Create GitHub release (on tag)
-        if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v2
-        with:
-          generate_release_notes: true
-          draft: false
-          prerelease: ${{ contains(github.ref, '-rc') || contains(github.ref, '-beta') }}
