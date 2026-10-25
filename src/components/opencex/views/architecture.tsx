@@ -15,7 +15,7 @@ export function ArchitectureView() {
           </div>
           <div className="flex-1">
             <h2 className="text-xl font-semibold">Mbuni CEX — Architecture</h2>
-            <p className="text-sm text-muted-foreground mt-1 max-w-3xl">
+            <p className="text-sm text-secondary mt-1 max-w-3xl">
               A modern redesign of the original Polygant Mbuni CEX. Replaces the legacy Django 3.2 + Celery + Vue stack
               with a high-performance, cloud-native system built on a Rust matching engine, Go microservices, and a
               React + Vite frontend. The deployment in this preview is a faithful TypeScript reimplementation of the
@@ -23,10 +23,10 @@ export function ArchitectureView() {
               and event flow described in the spec.
             </p>
           </div>
-          <div className="flex flex-col items-end gap-1 text-[10px] text-muted-foreground">
+          <div className="flex flex-col items-end gap-1 text-[10px] text-secondary">
             <span>Version 1.0</span>
             <span>24 October 2026</span>
-            <span className="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400">Final Design Spec</span>
+            <span className="px-2 py-0.5 rounded bg-primary/15 text-primary">Final Design Spec</span>
           </div>
         </div>
       </Card>
@@ -34,20 +34,20 @@ export function ArchitectureView() {
       {/* C4 Container diagram */}
       <Card className="p-3 md:p-4">
         <div className="flex items-center gap-2 mb-4">
-          <Boxes className="w-4 h-4 text-emerald-400" />
+          <Boxes className="w-4 h-4 text-primary" />
           <h3 className="text-sm font-semibold">Container Diagram (C4 Level 2)</h3>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
           {/* Frontend column */}
           <div className="space-y-2">
-            <div className="text-[10px] uppercase text-muted-foreground tracking-wider px-2">Frontend Layer</div>
+            <div className="text-[10px] uppercase text-secondary tracking-wider px-2">Frontend Layer</div>
             <Container icon={Radio} name="Trading Application" tech="React + Vite + TS" color="purple" />
             <Container icon={ShieldCheck} name="Admin Panel" tech="React + Vite + TS" color="purple" />
           </div>
 
           {/* Backend column */}
           <div className="space-y-2">
-            <div className="text-[10px] uppercase text-muted-foreground tracking-wider px-2">Backend Services</div>
+            <div className="text-[10px] uppercase text-secondary tracking-wider px-2">Backend Services</div>
             <Container icon={Server} name="API Gateway" tech="Envoy / Kong" color="cyan" />
             <Container icon={Server} name="Trading Service" tech="Go · gRPC" color="cyan" />
             <Container icon={Cpu} name="Matching Engine" tech="Rust · Tokio · Tonic" color="orange" />
@@ -58,7 +58,7 @@ export function ArchitectureView() {
 
           {/* Data column */}
           <div className="space-y-2">
-            <div className="text-[10px] uppercase text-muted-foreground tracking-wider px-2">Data & Messaging</div>
+            <div className="text-[10px] uppercase text-secondary tracking-wider px-2">Data & Messaging</div>
             <Container icon={Database} name="PostgreSQL 16/17" tech="+ TimescaleDB" color="emerald" />
             <Container icon={Radio} name="NATS JetStream" tech="Event Bus" color="emerald" />
             <Container icon={Database} name="Dragonfly / Redis" tech="Cache + state" color="emerald" />
@@ -66,7 +66,7 @@ export function ArchitectureView() {
 
           {/* External */}
           <div className="space-y-2">
-            <div className="text-[10px] uppercase text-muted-foreground tracking-wider px-2">External Systems</div>
+            <div className="text-[10px] uppercase text-secondary tracking-wider px-2">External Systems</div>
             <Container icon={Cloud} name="Blockchains" tech="BTC · ETH · SOL · TON · …" color="muted" />
             <Container icon={ShieldCheck} name="KYC / KYT" tech="Sumsub · Onfido · Scorechain" color="muted" />
             <Container icon={Radio} name="RPC Providers" tech="Alchemy · Infura · QuickNode" color="muted" />
@@ -78,7 +78,7 @@ export function ArchitectureView() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         <Card className="p-3 md:p-4">
           <div className="flex items-center gap-2 mb-3">
-            <GitBranch className="w-4 h-4 text-emerald-400" />
+            <GitBranch className="w-4 h-4 text-primary" />
             <h3 className="text-sm font-semibold">Technology Stack</h3>
           </div>
           <div className="space-y-1.5 text-xs">
@@ -102,7 +102,7 @@ export function ArchitectureView() {
 
         <Card className="p-3 md:p-4">
           <div className="flex items-center gap-2 mb-3">
-            <Activity className="w-4 h-4 text-emerald-400" />
+            <Activity className="w-4 h-4 text-primary" />
             <h3 className="text-sm font-semibold">Performance Targets</h3>
           </div>
           <div className="space-y-2 text-xs">
@@ -114,8 +114,8 @@ export function ArchitectureView() {
             <PerfRow metric="Scaling model" target="Pair-based sharding" detail="Horizontal" />
           </div>
           <div className="mt-4 pt-3 border-t border-border">
-            <div className="text-[10px] uppercase text-muted-foreground tracking-wider mb-2">Recovery Strategy</div>
-            <ol className="text-xs space-y-1 list-decimal list-inside text-muted-foreground">
+            <div className="text-[10px] uppercase text-secondary tracking-wider mb-2">Recovery Strategy</div>
+            <ol className="text-xs space-y-1 list-decimal list-inside text-secondary">
               <li>Load latest consistent snapshot</li>
               <li>Replay Write-Ahead Log (WAL)</li>
               <li>Resume normal operation</li>
@@ -127,12 +127,12 @@ export function ArchitectureView() {
       {/* NATS subjects */}
       <Card className="p-3 md:p-4">
         <div className="flex items-center gap-2 mb-3">
-          <Radio className="w-4 h-4 text-emerald-400" />
+          <Radio className="w-4 h-4 text-primary" />
           <h3 className="text-sm font-semibold">NATS JetStream Subjects (Domain Events)</h3>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
           {["orders.placed", "orders.cancelled", "orders.filled", "trades.executed", "balances.updated", "deposits.confirmed", "withdrawals.completed"].map((s) => (
-            <div key={s} className="bg-muted/20 rounded px-3 py-2 font-mono text-[11px] border border-border/40">
+            <div key={s} className="bg-elevated/40 rounded px-3 py-2 font-mono text-[11px] border border-border/40">
               {s}
             </div>
           ))}
@@ -142,7 +142,7 @@ export function ArchitectureView() {
       {/* Roadmap */}
       <Card className="p-3 md:p-4">
         <div className="flex items-center gap-2 mb-3">
-          <GitBranch className="w-4 h-4 text-emerald-400" />
+          <GitBranch className="w-4 h-4 text-primary" />
           <h3 className="text-sm font-semibold">Phased Delivery Roadmap</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -182,12 +182,12 @@ export function ArchitectureView() {
       </Card>
 
       {/* Note about this preview */}
-      <Card className="p-3 md:p-4 bg-muted/20">
+      <Card className="p-3 md:p-4 bg-elevated/40">
         <div className="flex items-start gap-3">
-          <div className="w-8 h-8 rounded bg-emerald-500/15 text-emerald-400 flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded bg-primary/15 text-primary flex items-center justify-center shrink-0">
             <Cpu className="w-4 h-4" />
           </div>
-          <div className="text-xs text-muted-foreground space-y-1.5">
+          <div className="text-xs text-secondary space-y-1.5">
             <p className="text-foreground font-medium">About this live preview</p>
             <p>
               This browser-based demo implements the Mbuni CEX matching engine contract in TypeScript, faithfully reproducing
@@ -222,8 +222,8 @@ function Container({
     purple: "bg-purple-500/10 border-purple-500/30 text-purple-300",
     cyan: "bg-cyan-500/10 border-cyan-500/30 text-cyan-300",
     orange: "bg-orange-500/10 border-orange-500/30 text-orange-300",
-    emerald: "bg-emerald-500/10 border-emerald-500/30 text-emerald-300",
-    muted: "bg-muted/40 border-border text-muted-foreground",
+    emerald: "bg-primary/10 border-primary/30 text-primary-hover",
+    muted: "bg-elevated/60 border-border text-secondary",
   };
   return (
     <div className={`rounded-md border p-2.5 ${colorMap[color]}`}>
@@ -239,7 +239,7 @@ function Container({
 function StackRow({ layer, tech }: { layer: string; tech: string }) {
   return (
     <div className="flex justify-between py-1 border-b border-border/40 last:border-0">
-      <span className="text-muted-foreground">{layer}</span>
+      <span className="text-secondary">{layer}</span>
       <span className="font-medium">{tech}</span>
     </div>
   );
@@ -250,28 +250,28 @@ function PerfRow({ metric, target, detail }: { metric: string; target: string; d
     <div className="flex items-center justify-between py-1.5 border-b border-border/40 last:border-0">
       <div className="flex flex-col">
         <span>{metric}</span>
-        <span className="text-[10px] text-muted-foreground">{detail}</span>
+        <span className="text-[10px] text-secondary">{detail}</span>
       </div>
-      <span className="font-mono text-emerald-400 font-medium">{target}</span>
+      <span className="font-mono text-primary font-medium">{target}</span>
     </div>
   );
 }
 
 function Phase({ tag, color, items }: { tag: string; color: "emerald" | "cyan" | "purple"; items: string[] }) {
   const colorMap = {
-    emerald: "border-emerald-500/30 bg-emerald-500/5",
+    emerald: "border-primary/30 bg-primary/5",
     cyan: "border-cyan-500/30 bg-cyan-500/5",
     purple: "border-purple-500/30 bg-purple-500/5",
   };
   const textMap = {
-    emerald: "text-emerald-400",
+    emerald: "text-primary",
     cyan: "text-cyan-400",
     purple: "text-purple-400",
   };
   return (
     <div className={`rounded-md border p-3 ${colorMap[color]}`}>
       <div className={`text-xs font-semibold mb-2 ${textMap[color]}`}>{tag}</div>
-      <ul className="text-[11px] space-y-1 text-muted-foreground">
+      <ul className="text-[11px] space-y-1 text-secondary">
         {items.map((it) => (
           <li key={it} className="flex items-start gap-1.5">
             <span className={`mt-1 w-1 h-1 rounded-full shrink-0 ${textMap[color].replace("text", "bg")}`} />

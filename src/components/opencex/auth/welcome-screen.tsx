@@ -69,7 +69,7 @@ export function WelcomeScreen({ onComplete }: { onComplete: () => void }) {
       {/* Skip button */}
       <button
         onClick={onComplete}
-        className="absolute top-4 right-4 md:top-6 md:right-6 z-10 text-xs text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-md hover:bg-muted/50 transition-colors"
+        className="absolute top-4 right-4 md:top-6 md:right-6 z-10 text-xs text-secondary hover:text-foreground px-3 py-1.5 rounded-md hover:bg-elevated/70 transition-colors"
       >
         Skip
       </button>
@@ -92,14 +92,14 @@ export function WelcomeScreen({ onComplete }: { onComplete: () => void }) {
                   <div className={`w-8 h-8 rounded-md bg-gradient-to-br ${slide.accent} flex items-center justify-center`}>
                     <slide.icon className="w-4 h-4 text-black" />
                   </div>
-                  <span className="text-[11px] uppercase tracking-wider text-muted-foreground font-medium">
+                  <span className="text-[11px] uppercase tracking-wider text-secondary font-medium">
                     {slide.eyebrow}
                   </span>
                 </div>
                 <h2 className="text-2xl md:text-4xl font-bold tracking-tight leading-tight whitespace-pre-line">
                   {slide.title}
                 </h2>
-                <p className="mt-4 text-sm md:text-base text-muted-foreground leading-relaxed max-w-md mx-auto md:mx-0">
+                <p className="mt-4 text-sm md:text-base text-secondary leading-relaxed max-w-md mx-auto md:mx-0">
                   {slide.description}
                 </p>
               </div>
@@ -122,7 +122,7 @@ export function WelcomeScreen({ onComplete }: { onComplete: () => void }) {
                 key={i}
                 onClick={() => setIndex(i)}
                 className={`h-1.5 rounded-full transition-all ${
-                  i === index ? "w-8 bg-emerald-400" : "w-1.5 bg-muted-foreground/40 hover:bg-muted-foreground/70"
+                  i === index ? "w-8 bg-primary" : "w-1.5 bg-elevated-foreground/40 hover:bg-elevated-foreground/70"
                 }`}
               />
             ))}
@@ -132,14 +132,14 @@ export function WelcomeScreen({ onComplete }: { onComplete: () => void }) {
             {index > 0 && (
               <button
                 onClick={prev}
-                className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                className="p-2 rounded-md text-secondary hover:text-foreground hover:bg-elevated/70"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
             )}
             <button
               onClick={next}
-              className="flex items-center gap-2 px-4 py-2 rounded-md bg-emerald-500 hover:bg-emerald-400 text-black text-sm font-semibold transition-colors"
+              className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary hover:bg-primary text-black text-sm font-semibold transition-colors"
             >
               {isLast ? "Get started" : "Continue"}
               <ArrowRight className="w-4 h-4" />
@@ -157,9 +157,9 @@ function EngineVisual() {
   // Animated order book with random flashing trades
   return (
     <div className="w-full max-w-xs bg-card border border-border rounded-lg p-3 shadow-2xl">
-      <div className="flex justify-between text-[10px] text-muted-foreground mb-2">
+      <div className="flex justify-between text-[10px] text-secondary mb-2">
         <span>BTC/USDT</span>
-        <span className="text-emerald-400">LIVE</span>
+        <span className="text-primary">LIVE</span>
       </div>
       <div className="space-y-0.5">
         {[
@@ -174,12 +174,12 @@ function EngineVisual() {
             animate={{ opacity: 1 }}
             transition={{ delay: i * 0.1 }}
           >
-            <div className="absolute inset-y-0 right-0 bg-red-500/10" style={{ width: `${l.q * 60}%` }} />
-            <span className="relative text-red-400 tabular">{l.p.toFixed(1)}</span>
-            <span className="relative text-right tabular text-muted-foreground">{l.q.toFixed(2)}</span>
+            <div className="absolute inset-y-0 right-0 bg-danger/10" style={{ width: `${l.q * 60}%` }} />
+            <span className="relative text-danger tabular">{l.p.toFixed(1)}</span>
+            <span className="relative text-right tabular text-secondary">{l.q.toFixed(2)}</span>
           </motion.div>
         ))}
-        <div className="my-1 py-1 border-y border-border text-center text-sm font-bold tabular text-emerald-400">
+        <div className="my-1 py-1 border-y border-border text-center text-sm font-bold tabular text-primary">
           67,285.50
         </div>
         {[
@@ -194,9 +194,9 @@ function EngineVisual() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 + i * 0.1 }}
           >
-            <div className="absolute inset-y-0 right-0 bg-emerald-500/10" style={{ width: `${l.q * 60}%` }} />
-            <span className="relative text-emerald-400 tabular">{l.p.toFixed(1)}</span>
-            <span className="relative text-right tabular text-muted-foreground">{l.q.toFixed(2)}</span>
+            <div className="absolute inset-y-0 right-0 bg-primary/10" style={{ width: `${l.q * 60}%` }} />
+            <span className="relative text-primary tabular">{l.p.toFixed(1)}</span>
+            <span className="relative text-right tabular text-secondary">{l.q.toFixed(2)}</span>
           </motion.div>
         ))}
       </div>
@@ -205,7 +205,7 @@ function EngineVisual() {
         animate={{ scale: [1, 1.05, 1], opacity: [0.7, 1, 0.7] }}
         transition={{ duration: 1.5, repeat: Infinity }}
       >
-        <span className="text-[9px] text-muted-foreground">⚡ p99 latency &lt; 500µs</span>
+        <span className="text-[9px] text-secondary">⚡ p99 latency &lt; 500µs</span>
       </motion.div>
     </div>
   );
@@ -248,7 +248,7 @@ function CoinsVisual() {
         transition={{ delay: 0.8 }}
       >
         {["Bitcoin", "Ethereum", "Solana", "TON", "Tron", "Arbitrum"].map((c) => (
-          <span key={c} className="text-[10px] px-2 py-0.5 rounded-full bg-muted/40 text-muted-foreground border border-border/40">
+          <span key={c} className="text-[10px] px-2 py-0.5 rounded-full bg-elevated/60 text-secondary border border-border/40">
             {c}
           </span>
         ))}
@@ -275,9 +275,9 @@ function TerminalVisual() {
 
   return (
     <div className="w-full max-w-sm bg-card border border-border rounded-lg p-3 shadow-2xl">
-      <div className="flex justify-between text-[10px] text-muted-foreground mb-2">
+      <div className="flex justify-between text-[10px] text-secondary mb-2">
         <span>BTC/USDT · 1m</span>
-        <span className="text-emerald-400">+3.09%</span>
+        <span className="text-primary">+3.09%</span>
       </div>
       <div className="relative h-32 flex items-end gap-1 px-1">
         {candles.map((c, i) => {
@@ -316,15 +316,15 @@ function TerminalVisual() {
         })}
         {/* Animated price line */}
         <motion.div
-          className="absolute left-0 right-0 h-px bg-emerald-400"
+          className="absolute left-0 right-0 h-px bg-primary"
           style={{ bottom: "30%" }}
           animate={{ opacity: [0.4, 1, 0.4] }}
           transition={{ duration: 2, repeat: Infinity }}
         />
       </div>
       <div className="mt-2 grid grid-cols-2 gap-1 text-[9px]">
-        <div className="px-2 py-1 rounded bg-emerald-500/15 text-emerald-400 text-center">BUY 0.05 BTC</div>
-        <div className="px-2 py-1 rounded bg-red-500/15 text-red-400 text-center">SELL 0.05 BTC</div>
+        <div className="px-2 py-1 rounded bg-primary/15 text-primary text-center">BUY 0.05 BTC</div>
+        <div className="px-2 py-1 rounded bg-danger/15 text-danger text-center">SELL 0.05 BTC</div>
       </div>
     </div>
   );

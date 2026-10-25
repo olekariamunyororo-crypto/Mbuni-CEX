@@ -26,13 +26,13 @@ export function MobileOrderSheet({ pair }: { pair: string }) {
         <div className="grid grid-cols-2 gap-2 pointer-events-auto">
           <button
             onClick={() => openWith("BUY")}
-            className="py-2.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-semibold text-sm shadow-lg shadow-emerald-500/20"
+            className="py-2.5 rounded-lg bg-primary hover:bg-primary text-black font-semibold text-sm shadow-lg shadow-emerald-500/20"
           >
             Buy
           </button>
           <button
             onClick={() => openWith("SELL")}
-            className="py-2.5 rounded-lg bg-red-500 hover:bg-red-400 text-white font-semibold text-sm shadow-lg shadow-red-500/20"
+            className="py-2.5 rounded-lg bg-danger hover:bg-danger text-white font-semibold text-sm shadow-lg shadow-red-500/20"
           >
             Sell
           </button>
@@ -45,11 +45,11 @@ export function MobileOrderSheet({ pair }: { pair: string }) {
           <SheetHeader className="px-3 py-2 border-b border-border">
             <SheetTitle className="text-sm flex items-center gap-2">
               <span
-                className={`px-2 py-0.5 rounded text-xs ${side === "BUY" ? "bg-emerald-500/15 text-emerald-400" : "bg-red-500/15 text-red-400"}`}
+                className={`px-2 py-0.5 rounded text-xs ${side === "BUY" ? "bg-primary/15 text-primary" : "bg-danger/15 text-danger"}`}
               >
                 {side === "BUY" ? "Buy" : "Sell"} {pair.split("/")[0]}
               </span>
-              <span className="text-muted-foreground text-xs">{pair}</span>
+              <span className="text-secondary text-xs">{pair}</span>
             </SheetTitle>
             <SheetDescription className="text-[11px]">
               Order entry · all types (Limit / Market / IOC / FOK / Post)

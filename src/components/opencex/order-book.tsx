@@ -21,17 +21,17 @@ export function OrderBook({ pair }: { pair: string }) {
   }, [book]);
 
   if (!book || !p) {
-    return <div className="p-4 text-muted-foreground text-sm">Loading order book…</div>;
+    return <div className="p-4 text-secondary text-sm">Loading order book…</div>;
   }
 
   return (
     <div className="flex flex-col h-full">
       <div className="px-3 py-2 border-b border-border flex items-center justify-between">
-        <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Order Book</span>
-        <span className="text-[10px] text-muted-foreground tabular">Depth · {p.symbol}</span>
+        <span className="text-xs font-semibold uppercase tracking-wider text-secondary">Order Book</span>
+        <span className="text-[10px] text-secondary tabular">Depth · {p.symbol}</span>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 px-3 py-1.5 text-[10px] uppercase text-muted-foreground border-b border-border">
+      <div className="grid grid-cols-3 gap-2 px-3 py-1.5 text-[10px] uppercase text-secondary border-b border-border">
         <span>Price (USDT)</span>
         <span className="text-right">Size ({p.base})</span>
         <span className="text-right">Total ({p.base})</span>
@@ -54,11 +54,11 @@ export function OrderBook({ pair }: { pair: string }) {
       </div>
 
       {/* Mid / spread */}
-      <div className="border-y border-border bg-muted/20 px-3 py-1.5 flex items-center justify-between">
-        <span className={`text-base font-bold tabular ${book.spread >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+      <div className="border-y border-border bg-elevated/40 px-3 py-1.5 flex items-center justify-between">
+        <span className={`text-base font-bold tabular ${book.spread >= 0 ? "text-primary" : "text-danger"}`}>
           {fmtPrice(book.lastPrice, p.priceDecimals)}
         </span>
-        <span className="text-[10px] text-muted-foreground">
+        <span className="text-[10px] text-secondary">
           Spread <span className="tabular text-foreground">{fmtPrice(book.spread, p.priceDecimals)}</span> ({spreadPct.toFixed(3)}%)
         </span>
       </div>
@@ -79,9 +79,9 @@ export function OrderBook({ pair }: { pair: string }) {
         ))}
       </div>
 
-      <div className="px-3 py-1.5 border-t border-border flex items-center justify-between text-[10px] text-muted-foreground">
-        <span>Total Bids: <span className="tabular text-emerald-400">{fmtCompact(bids.reduce((s, l) => s + l.qty, 0))} {p.base}</span></span>
-        <span>Total Asks: <span className="tabular text-red-400">{fmtCompact(asks.reduce((s, l) => s + l.qty, 0))} {p.base}</span></span>
+      <div className="px-3 py-1.5 border-t border-border flex items-center justify-between text-[10px] text-secondary">
+        <span>Total Bids: <span className="tabular text-primary">{fmtCompact(bids.reduce((s, l) => s + l.qty, 0))} {p.base}</span></span>
+        <span>Total Asks: <span className="tabular text-danger">{fmtCompact(asks.reduce((s, l) => s + l.qty, 0))} {p.base}</span></span>
       </div>
     </div>
   );
@@ -107,14 +107,14 @@ function BookRow({
   const pct = maxTotal > 0 ? (total / maxTotal) * 100 : 0;
   const isBid = side === "bid";
   return (
-    <div className="relative grid grid-cols-3 gap-2 px-3 py-0.5 text-xs tabular hover:bg-muted/30">
+    <div className="relative grid grid-cols-3 gap-2 px-3 py-0.5 text-xs tabular hover:bg-elevated/50">
       <div
-        className={`absolute inset-y-0 right-0 ${isBid ? "bg-emerald-500/10" : "bg-red-500/10"}`}
+        className={`absolute inset-y-0 right-0 ${isBid ? "bg-primary/10" : "bg-danger/10"}`}
         style={{ width: `${pct}%` }}
       />
-      <span className={`relative ${isBid ? "text-emerald-400" : "text-red-400"}`}>{fmtPrice(price, decimals)}</span>
+      <span className={`relative ${isBid ? "text-primary" : "text-danger"}`}>{fmtPrice(price, decimals)}</span>
       <span className="relative text-right">{fmtQty(qty, qtyDecimals)}</span>
-      <span className="relative text-right text-muted-foreground">{fmtQty(total, qtyDecimals)}</span>
+      <span className="relative text-right text-secondary">{fmtQty(total, qtyDecimals)}</span>
     </div>
   );
 }

@@ -91,7 +91,7 @@ export function OrderEntry({ pair, initialSide, onSubmitted }: { pair: string; i
   return (
     <div className="flex flex-col h-full">
       <div className="px-3 py-2 border-b border-border">
-        <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Place Order</span>
+        <span className="text-xs font-semibold uppercase tracking-wider text-secondary">Place Order</span>
       </div>
 
       {/* Side toggle */}
@@ -99,7 +99,7 @@ export function OrderEntry({ pair, initialSide, onSubmitted }: { pair: string; i
         <button
           onClick={() => setSide("BUY")}
           className={`py-1.5 rounded text-sm font-semibold transition-colors ${
-            isBuy ? "bg-emerald-500 text-black" : "bg-muted/40 text-muted-foreground hover:bg-muted"
+            isBuy ? "bg-primary text-black" : "bg-elevated/60 text-secondary hover:bg-elevated"
           }`}
         >
           Buy {baseAsset}
@@ -107,7 +107,7 @@ export function OrderEntry({ pair, initialSide, onSubmitted }: { pair: string; i
         <button
           onClick={() => setSide("SELL")}
           className={`py-1.5 rounded text-sm font-semibold transition-colors ${
-            !isBuy ? "bg-red-500 text-white" : "bg-muted/40 text-muted-foreground hover:bg-muted"
+            !isBuy ? "bg-danger text-white" : "bg-elevated/60 text-secondary hover:bg-elevated"
           }`}
         >
           Sell {baseAsset}
@@ -122,7 +122,7 @@ export function OrderEntry({ pair, initialSide, onSubmitted }: { pair: string; i
             onClick={() => setType(t.key)}
             title={t.hint}
             className={`px-2 py-0.5 text-[11px] rounded ${
-              type === t.key ? "bg-primary text-primary-foreground" : "bg-muted/40 text-muted-foreground hover:bg-muted"
+              type === t.key ? "bg-primary text-primary-foreground" : "bg-elevated/60 text-secondary hover:bg-elevated"
             }`}
           >
             {t.label}
@@ -133,14 +133,14 @@ export function OrderEntry({ pair, initialSide, onSubmitted }: { pair: string; i
       <div className="px-3 space-y-2">
         {/* Available */}
         <div className="flex items-center justify-between text-[11px]">
-          <span className="text-muted-foreground">Available</span>
+          <span className="text-secondary">Available</span>
           <span className="tabular">{fmtQty(isBuy ? quoteBalance : baseBalance, isBuy ? 2 : p.baseDecimals)} {isBuy ? quoteAsset : baseAsset}</span>
         </div>
 
         {/* Price input (hidden for market) */}
         {type !== "MARKET" && (
           <div>
-            <label className="text-[10px] uppercase text-muted-foreground">Price ({quoteAsset})</label>
+            <label className="text-[10px] uppercase text-secondary">Price ({quoteAsset})</label>
             <div className="flex items-center gap-1 mt-0.5">
               <input
                 type="number"
@@ -152,7 +152,7 @@ export function OrderEntry({ pair, initialSide, onSubmitted }: { pair: string; i
               />
               <button
                 onClick={() => setPrice(bestPrice?.toFixed(p.priceDecimals) ?? "")}
-                className="text-[10px] px-2 py-1.5 bg-muted/40 hover:bg-muted rounded"
+                className="text-[10px] px-2 py-1.5 bg-elevated/60 hover:bg-elevated rounded"
                 title="Use best market price"
               >
                 Last
@@ -163,7 +163,7 @@ export function OrderEntry({ pair, initialSide, onSubmitted }: { pair: string; i
 
         {/* Quantity */}
         <div>
-          <label className="text-[10px] uppercase text-muted-foreground">Amount ({baseAsset})</label>
+          <label className="text-[10px] uppercase text-secondary">Amount ({baseAsset})</label>
           <input
             type="number"
             value={qty}
@@ -180,7 +180,7 @@ export function OrderEntry({ pair, initialSide, onSubmitted }: { pair: string; i
             <button
               key={pct}
               onClick={() => setPercent(pct)}
-              className="py-0.5 text-[11px] bg-muted/40 hover:bg-muted rounded"
+              className="py-0.5 text-[11px] bg-elevated/60 hover:bg-elevated rounded"
             >
               {pct}%
             </button>
@@ -190,15 +190,15 @@ export function OrderEntry({ pair, initialSide, onSubmitted }: { pair: string; i
         {/* Total + fee */}
         <div className="space-y-1 pt-1">
           <div className="flex justify-between text-[11px]">
-            <span className="text-muted-foreground">Total</span>
+            <span className="text-secondary">Total</span>
             <span className="tabular">{fmtPrice(cost, 2)} {quoteAsset}</span>
           </div>
           <div className="flex justify-between text-[11px]">
-            <span className="text-muted-foreground">Est. Fee ({isMaker ? "Maker" : "Taker"} · {feeBps}bps)</span>
+            <span className="text-secondary">Est. Fee ({isMaker ? "Maker" : "Taker"} · {feeBps}bps)</span>
             <span className="tabular">{fmtPrice(fee, 2)} {quoteAsset}</span>
           </div>
           <div className="flex justify-between text-[11px]">
-            <span className="text-muted-foreground">Max {isBuy ? "Buy" : "Sell"}</span>
+            <span className="text-secondary">Max {isBuy ? "Buy" : "Sell"}</span>
             <span className="tabular">{fmtQty(maxQty, p.baseDecimals)} {baseAsset}</span>
           </div>
         </div>
@@ -210,8 +210,8 @@ export function OrderEntry({ pair, initialSide, onSubmitted }: { pair: string; i
           disabled={submitting}
           className={`w-full py-2 rounded font-semibold text-sm transition-all disabled:opacity-50 ${
             isBuy
-              ? "bg-emerald-500 hover:bg-emerald-400 text-black"
-              : "bg-red-500 hover:bg-red-400 text-white"
+              ? "bg-primary hover:bg-primary text-black"
+              : "bg-danger hover:bg-danger text-white"
           }`}
         >
           {submitting ? "Submitting…" : `${isBuy ? "Buy" : "Sell"} ${baseAsset}`}

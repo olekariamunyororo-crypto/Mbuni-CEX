@@ -44,7 +44,7 @@ export function TradingView() {
         <div className="hidden lg:flex flex-1" />
         <button
           onClick={() => setShowOpen(!showOpen)}
-          className="hidden lg:block text-[11px] text-muted-foreground hover:text-foreground"
+          className="hidden lg:block text-[11px] text-secondary hover:text-foreground"
         >
           {showOpen ? "Hide" : "Show"} my orders
         </button>
@@ -100,7 +100,7 @@ export function TradingView() {
         {/* Tabbed bottom section */}
         <div className="flex-1 flex flex-col min-h-0 bg-card">
           <Tabs value={mobileTab} onValueChange={(v) => setMobileTab(v as MobileTab)} className="flex-1 flex flex-col min-h-0">
-            <TabsList className="grid grid-cols-3 rounded-none border-b border-border bg-muted/20 h-9">
+            <TabsList className="grid grid-cols-3 rounded-none border-b border-border bg-elevated/40 h-9">
               <TabsTrigger value="book" className="text-xs gap-1">
                 <BookOpen className="w-3 h-3" /> Book
               </TabsTrigger>
@@ -143,13 +143,13 @@ function Stat({
   suffix?: string;
   compact?: boolean;
 }) {
-  const color = tone === "up" ? "text-emerald-400" : tone === "down" ? "text-red-400" : "text-foreground";
+  const color = tone === "up" ? "text-primary" : tone === "down" ? "text-danger" : "text-foreground";
   return (
     <div className={`flex ${compact ? "flex-row items-baseline gap-1" : "flex-col"} leading-tight shrink-0`}>
-      <span className="text-[10px] text-muted-foreground uppercase tracking-wider">{label}</span>
+      <span className="text-[10px] text-secondary uppercase tracking-wider">{label}</span>
       <span className={`${compact ? "text-xs" : "text-xs"} font-medium tabular ${color}`}>
         {value}
-        {suffix && <span className="text-muted-foreground ml-1">{suffix}</span>}
+        {suffix && <span className="text-secondary ml-1">{suffix}</span>}
       </span>
     </div>
   );

@@ -75,14 +75,14 @@ export function SplashScreen({ onDone }: { onDone: () => void }) {
 
         {/* Orbiting coin */}
         <motion.div
-          className="absolute w-6 h-6 rounded-full bg-amber-400 shadow-lg shadow-amber-400/50"
+          className="absolute w-6 h-6 rounded-full bg-gold shadow-lg shadow-gold/50"
           style={{ top: "50%", left: "50%", marginLeft: -12, marginTop: -12 }}
           animate={{ rotate: 360 }}
           transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
         >
           <div
             style={{ transform: "translate(60px, 0)" }}
-            className="w-6 h-6 rounded-full bg-amber-400 flex items-center justify-center text-[10px] font-bold text-black"
+            className="w-6 h-6 rounded-full bg-gold flex items-center justify-center text-[10px] font-bold text-black"
           >
             ₿
           </div>
@@ -97,11 +97,11 @@ export function SplashScreen({ onDone }: { onDone: () => void }) {
         transition={{ delay: 0.5, duration: 0.5 }}
       >
         Mbuni CEX
-        <span className="ml-2 text-emerald-400"> 2026</span>
+        <span className="ml-2 text-primary"> 2026</span>
       </motion.h1>
 
       <motion.p
-        className="relative mt-2 text-sm text-muted-foreground"
+        className="relative mt-2 text-sm text-secondary"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7, duration: 0.5 }}
@@ -110,13 +110,13 @@ export function SplashScreen({ onDone }: { onDone: () => void }) {
       </motion.p>
 
       {/* Loading bar */}
-      <div className="relative mt-10 w-64 h-1 bg-muted/40 rounded-full overflow-hidden">
+      <div className="relative mt-10 w-64 h-1 bg-elevated/60 rounded-full overflow-hidden">
         <motion.div
           className="absolute inset-y-0 left-0 bg-gradient-to-r from-emerald-400 to-cyan-500 rounded-full"
           style={{ width: `${progress}%` }}
         />
       </div>
-      <div className="relative mt-3 text-[10px] text-muted-foreground tabular w-64 flex justify-between">
+      <div className="relative mt-3 text-[10px] text-secondary tabular w-64 flex justify-between">
         <span className="flex items-center gap-1">
           <Cpu className="w-3 h-3" /> Initializing matching engine
         </span>
@@ -125,7 +125,7 @@ export function SplashScreen({ onDone }: { onDone: () => void }) {
 
       {/* Footer */}
       <motion.div
-        className="absolute bottom-6 text-[10px] text-muted-foreground/60"
+        className="absolute bottom-6 text-[10px] text-secondary/60"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 0.6 }}

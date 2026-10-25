@@ -118,20 +118,20 @@ export function SwapView() {
       <div className="w-full max-w-xl space-y-3 md:space-y-4">
         <div className="text-center">
           <h2 className="text-lg md:text-xl font-semibold">Swap</h2>
-          <p className="text-xs text-muted-foreground mt-1">Simple spot convert · routed through the CLOB for best price</p>
+          <p className="text-xs text-secondary mt-1">Simple spot convert · routed through the CLOB for best price</p>
         </div>
 
         {/* Settings */}
         <div className="flex items-center justify-end gap-2 flex-wrap">
-          <Settings2 className="w-3.5 h-3.5 text-muted-foreground" />
-          <span className="text-[11px] text-muted-foreground">Slippage</span>
+          <Settings2 className="w-3.5 h-3.5 text-secondary" />
+          <span className="text-[11px] text-secondary">Slippage</span>
           <div className="flex gap-1">
             {[0.1, 0.5, 1.0].map((v) => (
               <button
                 key={v}
                 onClick={() => setSlippage(v)}
                 className={`px-2 py-0.5 text-[11px] rounded ${
-                  slippage === v ? "bg-primary text-primary-foreground" : "bg-muted/40 text-muted-foreground hover:bg-muted"
+                  slippage === v ? "bg-primary text-primary-foreground" : "bg-elevated/60 text-secondary hover:bg-elevated"
                 }`}
               >
                 {v}%
@@ -142,7 +142,7 @@ export function SwapView() {
 
         {/* From */}
         <div className="bg-card border border-border rounded-lg p-3 md:p-4 space-y-2">
-          <div className="flex justify-between text-[11px] text-muted-foreground">
+          <div className="flex justify-between text-[11px] text-secondary">
             <span>From</span>
             <span className="truncate ml-2">Balance: <span className="tabular text-foreground">{fmtQty(fromBalance, 6)} {fromAsset}</span></span>
           </div>
@@ -162,7 +162,7 @@ export function SwapView() {
               <button
                 key={p}
                 onClick={() => setFromAmount(((fromBalance * p) / 100).toFixed(6))}
-                className="text-[10px] px-2 py-0.5 bg-muted/40 hover:bg-muted rounded"
+                className="text-[10px] px-2 py-0.5 bg-elevated/60 hover:bg-elevated rounded"
               >
                 {p}%
               </button>
@@ -174,7 +174,7 @@ export function SwapView() {
         <div className="flex justify-center -my-2 relative z-10">
           <button
             onClick={flip}
-            className="w-10 h-10 rounded-full bg-card border border-border hover:bg-muted flex items-center justify-center"
+            className="w-10 h-10 rounded-full bg-card border border-border hover:bg-elevated flex items-center justify-center"
           >
             <ArrowDownUp className="w-4 h-4" />
           </button>
@@ -182,7 +182,7 @@ export function SwapView() {
 
         {/* To */}
         <div className="bg-card border border-border rounded-lg p-3 md:p-4 space-y-2">
-          <div className="flex justify-between text-[11px] text-muted-foreground">
+          <div className="flex justify-between text-[11px] text-secondary">
             <span>To (estimated)</span>
             <span className="truncate ml-2">Balance: <span className="tabular text-foreground">{fmtQty(toBalance, 6)} {toAsset}</span></span>
           </div>
@@ -192,19 +192,19 @@ export function SwapView() {
               value={expectedOut ? expectedOut.toFixed(8) : ""}
               placeholder="0.00"
               readOnly
-              className="flex-1 min-w-0 bg-transparent text-xl md:text-2xl font-semibold tabular outline-none text-muted-foreground"
+              className="flex-1 min-w-0 bg-transparent text-xl md:text-2xl font-semibold tabular outline-none text-secondary"
             />
             <AssetPicker value={toAsset} onChange={setToAsset} assets={assets} />
           </div>
         </div>
 
         {/* Details */}
-        <div className="bg-muted/20 border border-border rounded-lg p-3 space-y-1.5 text-[11px]">
+        <div className="bg-elevated/40 border border-border rounded-lg p-3 space-y-1.5 text-[11px]">
           <Row label="Rate" value={`1 ${fromAsset} = ${fmtPrice(price, 8)} ${toAsset}`} />
           <Row label="Route" value={route} />
           <Row label="Min received" value={`${fmtQty(minReceived, 8)} ${toAsset}`} sub={`(${slippage}% slippage)`} />
           <Row label="Fee" value="0.1% · taker" />
-          <div className="flex items-start gap-1.5 pt-1.5 border-t border-border mt-2 text-muted-foreground">
+          <div className="flex items-start gap-1.5 pt-1.5 border-t border-border mt-2 text-secondary">
             <Info className="w-3 h-3 mt-0.5 shrink-0" />
             <span>Swaps route through the matching engine as market orders. Final fill depends on order book depth at execution time.</span>
           </div>
@@ -213,7 +213,7 @@ export function SwapView() {
         <button
           onClick={swap}
           disabled={!fromValue || fromValue > fromBalance}
-          className="w-full py-3 rounded-lg bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-black font-semibold flex items-center justify-center gap-2"
+          className="w-full py-3 rounded-lg bg-primary hover:bg-primary disabled:opacity-50 text-black font-semibold flex items-center justify-center gap-2"
         >
           <Zap className="w-4 h-4" />
           {fromValue > fromBalance ? `Insufficient ${fromAsset}` : `Swap ${fromAsset} → ${toAsset}`}
@@ -228,7 +228,7 @@ function AssetPicker({ value, onChange, assets }: { value: string; onChange: (v:
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="bg-muted/40 hover:bg-muted border border-border rounded-lg px-2 md:px-3 py-2 text-sm font-medium cursor-pointer shrink-0 max-w-[110px]"
+      className="bg-elevated/60 hover:bg-elevated border border-border rounded-lg px-2 md:px-3 py-2 text-sm font-medium cursor-pointer shrink-0 max-w-[110px]"
     >
       {assets.map((a) => (
         <option key={a} value={a}>{a}</option>
@@ -240,9 +240,9 @@ function AssetPicker({ value, onChange, assets }: { value: string; onChange: (v:
 function Row({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
     <div className="flex justify-between">
-      <span className="text-muted-foreground">{label}</span>
+      <span className="text-secondary">{label}</span>
       <span className="tabular text-foreground">
-        {value} {sub && <span className="text-muted-foreground ml-1">{sub}</span>}
+        {value} {sub && <span className="text-secondary ml-1">{sub}</span>}
       </span>
     </div>
   );

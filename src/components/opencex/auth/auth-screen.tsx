@@ -99,7 +99,7 @@ export function AuthScreen({ onComplete, onBack }: { onComplete: () => void; onB
         {/* Back */}
         <button
           onClick={onBack}
-          className="text-xs text-muted-foreground hover:text-foreground mb-4 flex items-center gap-1"
+          className="text-xs text-secondary hover:text-foreground mb-4 flex items-center gap-1"
         >
           <ArrowLeft className="w-3.5 h-3.5" /> Back to welcome
         </button>
@@ -112,7 +112,7 @@ export function AuthScreen({ onComplete, onBack }: { onComplete: () => void; onB
           <h1 className="text-2xl font-bold tracking-tight">
             {mode === "login" ? "Welcome back" : "Create your account"}
           </h1>
-          <p className="text-xs text-muted-foreground mt-1">
+          <p className="text-xs text-secondary mt-1">
             {mode === "login" ? "Sign in to your Mbuni CEX account" : "Start trading in under a minute"}
           </p>
         </div>
@@ -120,11 +120,11 @@ export function AuthScreen({ onComplete, onBack }: { onComplete: () => void; onB
         {/* Card */}
         <div className="bg-card border border-border rounded-xl p-5 shadow-2xl">
           {/* Tabs */}
-          <div className="grid grid-cols-2 gap-1 p-1 bg-muted/30 rounded-lg mb-5">
+          <div className="grid grid-cols-2 gap-1 p-1 bg-elevated/50 rounded-lg mb-5">
             <button
               onClick={() => setMode("login")}
               className={`py-2 rounded-md text-sm font-medium transition-colors ${
-                mode === "login" ? "bg-card text-foreground shadow" : "text-muted-foreground hover:text-foreground"
+                mode === "login" ? "bg-card text-foreground shadow" : "text-secondary hover:text-foreground"
               }`}
             >
               Sign in
@@ -132,7 +132,7 @@ export function AuthScreen({ onComplete, onBack }: { onComplete: () => void; onB
             <button
               onClick={() => setMode("signup")}
               className={`py-2 rounded-md text-sm font-medium transition-colors ${
-                mode === "signup" ? "bg-card text-foreground shadow" : "text-muted-foreground hover:text-foreground"
+                mode === "signup" ? "bg-card text-foreground shadow" : "text-secondary hover:text-foreground"
               }`}
             >
               Sign up
@@ -179,7 +179,7 @@ export function AuthScreen({ onComplete, onBack }: { onComplete: () => void; onB
               <button
                 type="button"
                 onClick={() => setShowPass(!showPass)}
-                className="text-muted-foreground hover:text-foreground p-1"
+                className="text-secondary hover:text-foreground p-1"
               >
                 {showPass ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
               </button>
@@ -187,7 +187,7 @@ export function AuthScreen({ onComplete, onBack }: { onComplete: () => void; onB
 
             {mode === "login" && (
               <div className="flex justify-end">
-                <button type="button" className="text-[11px] text-emerald-400 hover:text-emerald-300">
+                <button type="button" className="text-[11px] text-primary hover:text-primary-hover">
                   Forgot password?
                 </button>
               </div>
@@ -196,7 +196,7 @@ export function AuthScreen({ onComplete, onBack }: { onComplete: () => void; onB
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-black font-semibold text-sm flex items-center justify-center gap-2 transition-colors"
+              className="w-full py-2.5 rounded-lg bg-primary hover:bg-primary disabled:opacity-50 text-black font-semibold text-sm flex items-center justify-center gap-2 transition-colors"
             >
               {loading && <Loader2 className="w-4 h-4 animate-spin" />}
               {loading
@@ -210,7 +210,7 @@ export function AuthScreen({ onComplete, onBack }: { onComplete: () => void; onB
           {/* Divider */}
           <div className="flex items-center gap-3 my-4">
             <div className="flex-1 h-px bg-border" />
-            <span className="text-[10px] text-muted-foreground uppercase">or</span>
+            <span className="text-[10px] text-secondary uppercase">or</span>
             <div className="flex-1 h-px bg-border" />
           </div>
 
@@ -218,14 +218,14 @@ export function AuthScreen({ onComplete, onBack }: { onComplete: () => void; onB
           <button
             onClick={passkeySignIn}
             disabled={passkeyLoading}
-            className="w-full py-2.5 rounded-lg border border-border hover:bg-muted/40 text-sm font-medium flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+            className="w-full py-2.5 rounded-lg border border-border hover:bg-elevated/60 text-sm font-medium flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
           >
             {passkeyLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Fingerprint className="w-4 h-4" />}
             Continue with Passkey
           </button>
 
-          <div className="mt-4 flex items-start gap-2 text-[10px] text-muted-foreground">
-            <ShieldCheck className="w-3 h-3 mt-0.5 shrink-0 text-emerald-400" />
+          <div className="mt-4 flex items-start gap-2 text-[10px] text-secondary">
+            <ShieldCheck className="w-3 h-3 mt-0.5 shrink-0 text-primary" />
             <span>
               We never store passwords in plaintext — all credentials are bcrypt-hashed.
               Sessions are JWT-backed with 30-day expiry.
@@ -234,11 +234,11 @@ export function AuthScreen({ onComplete, onBack }: { onComplete: () => void; onB
         </div>
 
         {/* Demo creds hint */}
-        <div className="mt-4 text-center text-[11px] text-muted-foreground">
+        <div className="mt-4 text-center text-[11px] text-secondary">
           New here?{" "}
           <button
             onClick={() => setMode(mode === "login" ? "signup" : "login")}
-            className="text-emerald-400 hover:text-emerald-300 font-medium"
+            className="text-primary hover:text-primary-hover font-medium"
           >
             {mode === "login" ? "Create an account" : "Sign in instead"}
           </button>
@@ -259,9 +259,9 @@ function Field({
 }) {
   return (
     <div>
-      <label className="text-[10px] uppercase tracking-wider text-muted-foreground block mb-1">{label}</label>
+      <label className="text-[10px] uppercase tracking-wider text-secondary block mb-1">{label}</label>
       <div className="flex items-center gap-2 bg-input border border-border rounded-lg px-3 py-2 focus-within:ring-1 focus-within:ring-ring">
-        <Icon className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
+        <Icon className="w-3.5 h-3.5 text-secondary shrink-0" />
         {children}
       </div>
     </div>

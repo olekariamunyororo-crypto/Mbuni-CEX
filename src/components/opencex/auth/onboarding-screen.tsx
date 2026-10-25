@@ -126,10 +126,10 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
             <div key={s} className="flex-1">
               <div
                 className={`h-1 rounded-full transition-colors ${
-                  i <= step ? "bg-emerald-400" : "bg-muted-foreground/30"
+                  i <= step ? "bg-primary" : "bg-elevated-foreground/30"
                 }`}
               />
-              <div className={`text-[10px] mt-1.5 ${i === step ? "text-foreground font-medium" : "text-muted-foreground"}`}>
+              <div className={`text-[10px] mt-1.5 ${i === step ? "text-foreground font-medium" : "text-secondary"}`}>
                 {s}
               </div>
             </div>
@@ -179,14 +179,14 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
           <button
             onClick={prev}
             disabled={step === 0}
-            className="flex items-center gap-1 px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground disabled:opacity-40"
+            className="flex items-center gap-1 px-3 py-2 rounded-md text-sm text-secondary hover:text-foreground disabled:opacity-40"
           >
             <ArrowLeft className="w-4 h-4" /> Back
           </button>
           <button
             onClick={next}
             disabled={saving}
-            className="flex items-center gap-2 px-4 py-2 rounded-md bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-black text-sm font-semibold transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary hover:bg-primary disabled:opacity-50 text-black text-sm font-semibold transition-colors"
           >
             {saving && <Loader2 className="w-4 h-4 animate-spin" />}
             {saving
@@ -207,7 +207,7 @@ function StepExperience({ value, onChange }: { value: Experience; onChange: (e: 
   return (
     <div>
       <h2 className="text-2xl font-bold tracking-tight">How would you describe yourself?</h2>
-      <p className="text-sm text-muted-foreground mt-1 mb-6">We&apos;ll tune the experience and your default fee tier accordingly.</p>
+      <p className="text-sm text-secondary mt-1 mb-6">We&apos;ll tune the experience and your default fee tier accordingly.</p>
 
       <div className="grid sm:grid-cols-2 gap-2">
         {EXPERIENCES.map((e) => {
@@ -218,20 +218,20 @@ function StepExperience({ value, onChange }: { value: Experience; onChange: (e: 
               key={e.key}
               onClick={() => onChange(e.key)}
               className={`text-left p-4 rounded-lg border transition-all flex items-start gap-3 ${
-                active ? "border-emerald-500 bg-emerald-500/10" : "border-border hover:border-border/80 hover:bg-muted/30"
+                active ? "border-primary bg-primary/10" : "border-border hover:border-border/80 hover:bg-elevated/50"
               }`}
             >
-              <div className={`w-9 h-9 rounded-md flex items-center justify-center shrink-0 ${active ? "bg-emerald-500 text-black" : "bg-muted/40 text-muted-foreground"}`}>
+              <div className={`w-9 h-9 rounded-md flex items-center justify-center shrink-0 ${active ? "bg-primary text-black" : "bg-elevated/60 text-secondary"}`}>
                 <Icon className="w-4 h-4" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
                   <span className="font-semibold text-sm">{e.label}</span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-muted/40 text-muted-foreground">T{e.tier}</span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-elevated/60 text-secondary">T{e.tier}</span>
                 </div>
-                <p className="text-xs text-muted-foreground mt-0.5">{e.description}</p>
+                <p className="text-xs text-secondary mt-0.5">{e.description}</p>
               </div>
-              {active && <Check className="w-4 h-4 text-emerald-400 shrink-0" />}
+              {active && <Check className="w-4 h-4 text-primary shrink-0" />}
             </button>
           );
         })}
@@ -253,8 +253,8 @@ function StepMarkets({
   return (
     <div>
       <h2 className="text-2xl font-bold tracking-tight">Follow your markets</h2>
-      <p className="text-sm text-muted-foreground mt-1 mb-6">
-        We&apos;ll pin these to your sidebar and dashboard. Selected: <span className="text-emerald-400 font-medium">{selected.length}</span>
+      <p className="text-sm text-secondary mt-1 mb-6">
+        We&apos;ll pin these to your sidebar and dashboard. Selected: <span className="text-primary font-medium">{selected.length}</span>
       </p>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -267,7 +267,7 @@ function StepMarkets({
               key={sym}
               onClick={() => onToggle(sym)}
               className={`p-3 rounded-lg border flex items-center gap-2 transition-all ${
-                active ? "border-emerald-500 bg-emerald-500/10" : "border-border hover:bg-muted/30"
+                active ? "border-primary bg-primary/10" : "border-border hover:bg-elevated/50"
               }`}
             >
               <div
@@ -278,12 +278,12 @@ function StepMarkets({
               </div>
               <div className="flex-1 min-w-0">
                 <div className="text-xs font-medium">{sym}</div>
-                <div className="text-[10px] text-muted-foreground truncate">{meta?.name}</div>
+                <div className="text-[10px] text-secondary truncate">{meta?.name}</div>
               </div>
               {active ? (
-                <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400 shrink-0" />
+                <Star className="w-3.5 h-3.5 fill-gold text-gold shrink-0" />
               ) : (
-                <Star className="w-3.5 h-3.5 text-muted-foreground/40 shrink-0" />
+                <Star className="w-3.5 h-3.5 text-secondary/40 shrink-0" />
               )}
             </button>
           );
@@ -306,7 +306,7 @@ function StepSecurity({
   return (
     <div>
       <h2 className="text-2xl font-bold tracking-tight">Secure your account</h2>
-      <p className="text-sm text-muted-foreground mt-1 mb-6">
+      <p className="text-sm text-secondary mt-1 mb-6">
         Recommended for any account holding crypto. You can change these later in Settings.
       </p>
 
@@ -327,9 +327,9 @@ function StepSecurity({
           enabled={passkeyEnrolled}
           onToggle={() => onChange({ passkeyEnrolled: !passkeyEnrolled })}
         />
-        <div className="bg-muted/20 border border-border rounded-lg p-3 flex items-start gap-3 text-xs">
-          <ShieldCheck className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
-          <div className="text-muted-foreground">
+        <div className="bg-elevated/40 border border-border rounded-lg p-3 flex items-start gap-3 text-xs">
+          <ShieldCheck className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+          <div className="text-secondary">
             <span className="text-foreground font-medium">Always enforced:</span> Withdrawal address whitelisting with 24h time-lock, hot wallet caps, and complete audit trail. These cannot be disabled.
           </div>
         </div>
@@ -354,17 +354,17 @@ function SecurityCard({
   onToggle: () => void;
 }) {
   return (
-    <div className={`p-4 rounded-lg border flex items-start gap-3 transition-all ${enabled ? "border-emerald-500 bg-emerald-500/5" : "border-border"}`}>
+    <div className={`p-4 rounded-lg border flex items-start gap-3 transition-all ${enabled ? "border-primary bg-primary/5" : "border-border"}`}>
       <div className={`w-9 h-9 rounded-md bg-gradient-to-br ${accent} flex items-center justify-center shrink-0`}>
         <Icon className="w-4 h-4 text-black" />
       </div>
       <div className="flex-1">
         <div className="font-semibold text-sm">{title}</div>
-        <p className="text-xs text-muted-foreground mt-0.5">{description}</p>
+        <p className="text-xs text-secondary mt-0.5">{description}</p>
       </div>
       <button
         onClick={onToggle}
-        className={`relative w-10 h-6 rounded-full transition-colors shrink-0 ${enabled ? "bg-emerald-500" : "bg-muted-foreground/30"}`}
+        className={`relative w-10 h-6 rounded-full transition-colors shrink-0 ${enabled ? "bg-primary" : "bg-elevated-foreground/30"}`}
       >
         <motion.span
           className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow"
@@ -382,7 +382,7 @@ function StepReview({ prefs, onToggleTerms }: { prefs: Prefs; onToggleTerms: () 
   return (
     <div>
       <h2 className="text-2xl font-bold tracking-tight">Review &amp; accept</h2>
-      <p className="text-sm text-muted-foreground mt-1 mb-6">Confirm your setup before entering the exchange.</p>
+      <p className="text-sm text-secondary mt-1 mb-6">Confirm your setup before entering the exchange.</p>
 
       <div className="space-y-2 mb-5">
         <Row label="Experience" value={experience.label} badge={`Tier ${experience.tier}`} />
@@ -391,16 +391,16 @@ function StepReview({ prefs, onToggleTerms }: { prefs: Prefs; onToggleTerms: () 
         <Row label="Passkey / WebAuthn" value={prefs.passkeyEnrolled ? "Enrolled" : "Not enrolled"} tone={prefs.passkeyEnrolled ? "up" : "muted"} />
       </div>
 
-      <label className="flex items-start gap-3 p-3 bg-muted/20 border border-border rounded-lg cursor-pointer hover:bg-muted/30">
+      <label className="flex items-start gap-3 p-3 bg-elevated/40 border border-border rounded-lg cursor-pointer hover:bg-elevated/50">
         <input
           type="checkbox"
           checked={prefs.acceptedTerms}
           onChange={onToggleTerms}
           className="mt-0.5 w-4 h-4 accent-emerald-500"
         />
-        <span className="text-xs text-muted-foreground">
-          I agree to the <a className="text-emerald-400 hover:underline">Terms of Service</a>, acknowledge the{" "}
-          <a className="text-emerald-400 hover:underline">Risk Disclosure</a>, and confirm I am 18+ and not a
+        <span className="text-xs text-secondary">
+          I agree to the <a className="text-primary hover:underline">Terms of Service</a>, acknowledge the{" "}
+          <a className="text-primary hover:underline">Risk Disclosure</a>, and confirm I am 18+ and not a
           resident of a restricted jurisdiction.
         </span>
       </label>
@@ -409,15 +409,15 @@ function StepReview({ prefs, onToggleTerms }: { prefs: Prefs; onToggleTerms: () 
 }
 
 function Row({ label, value, detail, badge, tone }: { label: string; value: string; detail?: string; badge?: string; tone?: "up" | "muted" }) {
-  const color = tone === "up" ? "text-emerald-400" : tone === "muted" ? "text-muted-foreground" : "text-foreground";
+  const color = tone === "up" ? "text-primary" : tone === "muted" ? "text-secondary" : "text-foreground";
   return (
     <div className="flex items-center justify-between py-2 border-b border-border/40">
-      <span className="text-xs text-muted-foreground">{label}</span>
+      <span className="text-xs text-secondary">{label}</span>
       <div className="text-right">
         <div className={`text-sm font-medium ${color}`}>
-          {value} {badge && <span className="ml-1 text-[10px] px-1.5 py-0.5 rounded bg-muted/40 text-muted-foreground">{badge}</span>}
+          {value} {badge && <span className="ml-1 text-[10px] px-1.5 py-0.5 rounded bg-elevated/60 text-secondary">{badge}</span>}
         </div>
-        {detail && <div className="text-[10px] text-muted-foreground mt-0.5 truncate max-w-[200px]">{detail}</div>}
+        {detail && <div className="text-[10px] text-secondary mt-0.5 truncate max-w-[200px]">{detail}</div>}
       </div>
     </div>
   );

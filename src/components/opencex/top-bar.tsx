@@ -53,7 +53,7 @@ export function TopBar({
           <span className="md:hidden">{meta.short}</span>
           <span className="hidden md:inline">{meta.title}</span>
         </h1>
-        <span className="text-[11px] text-muted-foreground truncate hidden md:inline">{meta.subtitle}</span>
+        <span className="text-[11px] text-secondary truncate hidden md:inline">{meta.subtitle}</span>
       </div>
 
       <div className="flex-1" />
@@ -62,32 +62,32 @@ export function TopBar({
       {view === "trading" && ticker && (
         <>
           {/* Mobile compact: pair + price + change badge */}
-          <div className="flex md:hidden items-center gap-2 px-2 py-1 rounded-md bg-muted/40">
+          <div className="flex md:hidden items-center gap-2 px-2 py-1 rounded-md bg-elevated/60">
             <span className="text-[11px] font-medium">{activePair}</span>
             <span className="text-sm font-semibold tabular">{fmtPrice(ticker.lastPrice, 2)}</span>
-            <span className={`text-[10px] tabular ${ticker.priceChangePct >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+            <span className={`text-[10px] tabular ${ticker.priceChangePct >= 0 ? "text-primary" : "text-danger"}`}>
               {fmtPct(ticker.priceChangePct)}
             </span>
           </div>
 
           {/* Desktop full ticker */}
-          <div className="hidden md:flex items-center gap-4 px-3 py-1 rounded-md bg-muted/40">
+          <div className="hidden md:flex items-center gap-4 px-3 py-1 rounded-md bg-elevated/60">
             <div className="flex flex-col leading-tight">
-              <span className="text-[10px] text-muted-foreground">{activePair}</span>
+              <span className="text-[10px] text-secondary">{activePair}</span>
               <span className="text-sm font-semibold tabular">{fmtPrice(ticker.lastPrice, 2)}</span>
             </div>
             <div className="flex flex-col leading-tight">
-              <span className="text-[10px] text-muted-foreground">24h Change</span>
-              <span className={`text-sm font-medium tabular ${ticker.priceChangePct >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+              <span className="text-[10px] text-secondary">24h Change</span>
+              <span className={`text-sm font-medium tabular ${ticker.priceChangePct >= 0 ? "text-primary" : "text-danger"}`}>
                 {fmtPct(ticker.priceChangePct)}
               </span>
             </div>
             <div className="flex flex-col leading-tight">
-              <span className="text-[10px] text-muted-foreground">24h High</span>
+              <span className="text-[10px] text-secondary">24h High</span>
               <span className="text-sm font-medium tabular">{fmtPrice(ticker.high, 2)}</span>
             </div>
             <div className="flex flex-col leading-tight">
-              <span className="text-[10px] text-muted-foreground">24h Low</span>
+              <span className="text-[10px] text-secondary">24h Low</span>
               <span className="text-sm font-medium tabular">{fmtPrice(ticker.low, 2)}</span>
             </div>
           </div>
@@ -95,33 +95,33 @@ export function TopBar({
       )}
 
       {/* Engine live indicator — only on lg+ */}
-      <div className="hidden lg:flex items-center gap-2 px-2 py-1 rounded-md bg-muted/40">
+      <div className="hidden lg:flex items-center gap-2 px-2 py-1 rounded-md bg-elevated/60">
         <span className="relative flex h-2 w-2">
-          <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 live-dot" />
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+          <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-60 live-dot" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
         </span>
-        <span className="text-[11px] text-muted-foreground">Engine live</span>
-        <span className="text-[11px] text-muted-foreground tabular">{now}</span>
+        <span className="text-[11px] text-secondary">Engine live</span>
+        <span className="text-[11px] text-secondary tabular">{now}</span>
       </div>
 
       {/* Action buttons — hide most on mobile, keep bell */}
-      <button className="hidden sm:block p-2 rounded-md hover:bg-muted/50 text-muted-foreground hover:text-foreground">
+      <button className="hidden sm:block p-2 rounded-md hover:bg-elevated/70 text-secondary hover:text-foreground">
         <Search className="w-4 h-4" />
       </button>
-      <button className="p-2 rounded-md hover:bg-muted/50 text-muted-foreground hover:text-foreground relative">
+      <button className="p-2 rounded-md hover:bg-elevated/70 text-secondary hover:text-foreground relative">
         <Bell className="w-4 h-4" />
-        <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-red-500 rounded-full" />
+        <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-danger rounded-full" />
       </button>
-      <button className="hidden sm:block p-2 rounded-md hover:bg-muted/50 text-muted-foreground hover:text-foreground">
+      <button className="hidden sm:block p-2 rounded-md hover:bg-elevated/70 text-secondary hover:text-foreground">
         <Settings className="w-4 h-4" />
       </button>
-      <button className="hidden sm:block p-2 rounded-md hover:bg-muted/50 text-muted-foreground hover:text-foreground">
+      <button className="hidden sm:block p-2 rounded-md hover:bg-elevated/70 text-secondary hover:text-foreground">
         <Activity className="w-4 h-4" />
       </button>
       <button
         onClick={() => signOut({ redirect: false }).then(() => onLogout?.())}
         title="Sign out"
-        className="md:hidden p-2 rounded-md hover:bg-muted/50 text-muted-foreground hover:text-red-400"
+        className="md:hidden p-2 rounded-md hover:bg-elevated/70 text-secondary hover:text-danger"
       >
         <LogOut className="w-4 h-4" />
       </button>

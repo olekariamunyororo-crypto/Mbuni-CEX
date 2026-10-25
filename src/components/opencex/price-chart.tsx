@@ -81,22 +81,22 @@ export function PriceChart({ pair }: { pair: string }) {
     <div className="flex flex-col h-full">
       <div className="px-2 md:px-3 py-2 border-b border-border flex items-center justify-between flex-wrap gap-2">
         <div className="flex items-center gap-2 md:gap-3 min-w-0">
-          <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground shrink-0">{p.symbol}</span>
+          <span className="text-xs font-semibold uppercase tracking-wider text-secondary shrink-0">{p.symbol}</span>
           {/* Compact change indicator — mobile only */}
-          <span className={`md:hidden px-1.5 py-0.5 rounded text-[10px] ${up ? "bg-emerald-500/15 text-emerald-400" : "bg-red-500/15 text-red-400"}`}>
+          <span className={`md:hidden px-1.5 py-0.5 rounded text-[10px] ${up ? "bg-primary/15 text-primary" : "bg-danger/15 text-danger"}`}>
             {up ? "+" : ""}{changePct.toFixed(2)}%
           </span>
           {/* Full OHLC — desktop only */}
           <div className="hidden md:flex items-center gap-1 text-xs tabular">
-            <span className="text-muted-foreground">O</span>
-            <span className={up ? "text-emerald-400" : "text-red-400"}>{fmtPrice(display?.open, p.priceDecimals)}</span>
-            <span className="text-muted-foreground ml-1">H</span>
-            <span className={up ? "text-emerald-400" : "text-red-400"}>{fmtPrice(display?.high, p.priceDecimals)}</span>
-            <span className="text-muted-foreground ml-1">L</span>
-            <span className={up ? "text-emerald-400" : "text-red-400"}>{fmtPrice(display?.low, p.priceDecimals)}</span>
-            <span className="text-muted-foreground ml-1">C</span>
-            <span className={up ? "text-emerald-400" : "text-red-400"}>{fmtPrice(display?.close ?? lastPrice, p.priceDecimals)}</span>
-            <span className={`ml-2 px-1.5 py-0.5 rounded text-[10px] ${up ? "bg-emerald-500/15 text-emerald-400" : "bg-red-500/15 text-red-400"}`}>
+            <span className="text-secondary">O</span>
+            <span className={up ? "text-primary" : "text-danger"}>{fmtPrice(display?.open, p.priceDecimals)}</span>
+            <span className="text-secondary ml-1">H</span>
+            <span className={up ? "text-primary" : "text-danger"}>{fmtPrice(display?.high, p.priceDecimals)}</span>
+            <span className="text-secondary ml-1">L</span>
+            <span className={up ? "text-primary" : "text-danger"}>{fmtPrice(display?.low, p.priceDecimals)}</span>
+            <span className="text-secondary ml-1">C</span>
+            <span className={up ? "text-primary" : "text-danger"}>{fmtPrice(display?.close ?? lastPrice, p.priceDecimals)}</span>
+            <span className={`ml-2 px-1.5 py-0.5 rounded text-[10px] ${up ? "bg-primary/15 text-primary" : "bg-danger/15 text-danger"}`}>
               {up ? "+" : ""}{changePct.toFixed(2)}%
             </span>
           </div>
@@ -107,7 +107,7 @@ export function PriceChart({ pair }: { pair: string }) {
               key={t.label}
               onClick={() => setTf(t.minutes)}
               className={`px-2 py-0.5 text-[11px] rounded ${
-                tf === t.minutes ? "bg-muted text-foreground" : "text-muted-foreground hover:bg-muted/50"
+                tf === t.minutes ? "bg-elevated text-foreground" : "text-secondary hover:bg-elevated/70"
               }`}
             >
               {t.label}
@@ -210,7 +210,7 @@ export function PriceChart({ pair }: { pair: string }) {
         </svg>
       </div>
 
-      <div className="px-2 md:px-3 py-1 border-t border-border flex items-center justify-between text-[10px] text-muted-foreground">
+      <div className="px-2 md:px-3 py-1 border-t border-border flex items-center justify-between text-[10px] text-secondary">
         <span>Vol: <span className="tabular text-foreground">{fmtCompact(aggregated.reduce((s, k) => s + k.volume, 0))} {p.base}</span></span>
         <span className="hidden sm:inline">{aggregated.length} candles · {hover ? "Hover: " + fmtTime(hover.openTime) : "Live"}</span>
         <span className="sm:hidden">{hover ? fmtTime(hover.openTime) : "Live"}</span>

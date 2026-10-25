@@ -70,28 +70,28 @@ export function AdminView() {
                     </div>
                     <div>
                       <div className="font-semibold text-sm">{s.name}</div>
-                      <div className="text-[10px] text-muted-foreground">{s.language} · v{s.version}</div>
+                      <div className="text-[10px] text-secondary">{s.language} · v{s.version}</div>
                     </div>
                   </div>
                   <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${
-                    s.status === "healthy" ? "bg-emerald-500/15 text-emerald-400" :
-                    s.status === "degraded" ? "bg-yellow-500/15 text-yellow-400" :
-                    "bg-red-500/15 text-red-400"
+                    s.status === "healthy" ? "bg-primary/15 text-primary" :
+                    s.status === "degraded" ? "bg-yellow-500/15 text-gold" :
+                    "bg-danger/15 text-danger"
                   }`}>
                     {s.status}
                   </span>
                 </div>
                 <div className="mt-3 grid grid-cols-3 gap-2 text-[11px]">
                   <div>
-                    <div className="text-muted-foreground">p99 Latency</div>
+                    <div className="text-secondary">p99 Latency</div>
                     <div className="tabular font-medium">{s.latencyUs > 0 ? `${s.latencyUs.toLocaleString()} µs` : "—"}</div>
                   </div>
                   <div>
-                    <div className="text-muted-foreground">Ready</div>
-                    <div className={s.ready ? "text-emerald-400" : "text-red-400"}>{s.ready ? "✓ /readyz" : "✗ /readyz"}</div>
+                    <div className="text-secondary">Ready</div>
+                    <div className={s.ready ? "text-primary" : "text-danger"}>{s.ready ? "✓ /readyz" : "✗ /readyz"}</div>
                   </div>
                   <div>
-                    <div className="text-muted-foreground">Uptime</div>
+                    <div className="text-secondary">Uptime</div>
                     <div className="tabular font-medium">{s.uptime}</div>
                   </div>
                 </div>
@@ -121,7 +121,7 @@ export function AdminView() {
           <Card className="overflow-hidden">
             <div className="overflow-x-auto no-scrollbar">
               <div style={{ minWidth: "640px" }}>
-            <div className="grid grid-cols-7 gap-2 px-4 py-2 text-[10px] uppercase text-muted-foreground border-b border-border">
+            <div className="grid grid-cols-7 gap-2 px-4 py-2 text-[10px] uppercase text-secondary border-b border-border">
               <span className="col-span-2">User</span>
               <span>KYC</span>
               <span>Tier</span>
@@ -130,13 +130,13 @@ export function AdminView() {
               <span>Joined</span>
             </div>
             {users.map((u) => (
-              <div key={u.id} className="grid grid-cols-7 gap-2 px-4 py-2 text-xs items-center border-b border-border/40 hover:bg-muted/20">
+              <div key={u.id} className="grid grid-cols-7 gap-2 px-4 py-2 text-xs items-center border-b border-border/40 hover:bg-elevated/40">
                 <span className="col-span-2 font-medium truncate">{u.email}</span>
-                <span className={u.kycStatus === "VERIFIED" ? "text-emerald-400" : u.kycStatus === "PENDING" ? "text-yellow-400" : "text-muted-foreground"}>{u.kycStatus}</span>
-                <span><span className="px-1.5 py-0.5 rounded bg-muted text-[10px]">T{u.tier}</span></span>
-                <span className={u.twoFA ? "text-emerald-400" : "text-muted-foreground"}>{u.twoFA ? "Enabled" : "Off"}</span>
-                <span className={u.passkey ? "text-emerald-400" : "text-muted-foreground"}>{u.passkey ? "Bound" : "—"}</span>
-                <span className="text-muted-foreground text-[11px]">{fmtDateTime(u.createdAt)}</span>
+                <span className={u.kycStatus === "VERIFIED" ? "text-primary" : u.kycStatus === "PENDING" ? "text-gold" : "text-secondary"}>{u.kycStatus}</span>
+                <span><span className="px-1.5 py-0.5 rounded bg-elevated text-[10px]">T{u.tier}</span></span>
+                <span className={u.twoFA ? "text-primary" : "text-secondary"}>{u.twoFA ? "Enabled" : "Off"}</span>
+                <span className={u.passkey ? "text-primary" : "text-secondary"}>{u.passkey ? "Bound" : "—"}</span>
+                <span className="text-secondary text-[11px]">{fmtDateTime(u.createdAt)}</span>
               </div>
             ))}
               </div>
@@ -148,25 +148,25 @@ export function AdminView() {
           {RISK_ALERTS.map((a) => (
             <Card key={a.id} className="p-3 flex items-center gap-3">
               <AlertTriangle className={`w-4 h-4 ${
-                a.severity === "high" ? "text-red-400" :
-                a.severity === "medium" ? "text-yellow-400" :
-                a.severity === "low" ? "text-blue-400" : "text-muted-foreground"
+                a.severity === "high" ? "text-danger" :
+                a.severity === "medium" ? "text-gold" :
+                a.severity === "low" ? "text-blue-400" : "text-secondary"
               }`} />
               <div className="flex-1">
                 <div className="text-sm">{a.message}</div>
-                <div className="text-[10px] text-muted-foreground">{fmtDateTime(a.time)}</div>
+                <div className="text-[10px] text-secondary">{fmtDateTime(a.time)}</div>
               </div>
               <span className={`px-2 py-0.5 rounded text-[10px] uppercase ${
-                a.severity === "high" ? "bg-red-500/15 text-red-400" :
-                a.severity === "medium" ? "bg-yellow-500/15 text-yellow-400" :
-                a.severity === "low" ? "bg-blue-500/15 text-blue-400" : "bg-muted text-muted-foreground"
+                a.severity === "high" ? "bg-danger/15 text-danger" :
+                a.severity === "medium" ? "bg-yellow-500/15 text-gold" :
+                a.severity === "low" ? "bg-blue-500/15 text-blue-400" : "bg-elevated text-secondary"
               }`}>{a.severity}</span>
             </Card>
           ))}
 
           <Card className="p-4">
             <div className="flex items-center gap-2 mb-2">
-              <Lock className="w-4 h-4 text-emerald-400" />
+              <Lock className="w-4 h-4 text-primary" />
               <span className="text-sm font-semibold">Custody Controls</span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
@@ -184,7 +184,7 @@ export function AdminView() {
           <Card className="overflow-hidden">
             <div className="overflow-x-auto no-scrollbar">
               <div style={{ minWidth: "600px" }}>
-            <div className="grid grid-cols-6 gap-2 px-4 py-2 text-[10px] uppercase text-muted-foreground border-b border-border">
+            <div className="grid grid-cols-6 gap-2 px-4 py-2 text-[10px] uppercase text-secondary border-b border-border">
               <span>Symbol</span>
               <span>Base / Quote</span>
               <span className="text-right">Tick Size</span>
@@ -195,14 +195,14 @@ export function AdminView() {
             {pairs.map((p) => {
               const t = tickers[p.symbol];
               return (
-                <div key={p.symbol} className="grid grid-cols-6 gap-2 px-4 py-2 text-xs items-center border-b border-border/40 tabular hover:bg-muted/20">
+                <div key={p.symbol} className="grid grid-cols-6 gap-2 px-4 py-2 text-xs items-center border-b border-border/40 tabular hover:bg-elevated/40">
                   <span className="font-medium">{p.symbol}</span>
-                  <span className="text-muted-foreground">{p.base} / {p.quote}</span>
+                  <span className="text-secondary">{p.base} / {p.quote}</span>
                   <span className="text-right">{p.tickSize}</span>
                   <span className="text-right">{p.minQty}</span>
                   <span className="text-right">{t ? fmtUSD(t.quoteVolume) : "—"}</span>
                   <span>
-                    <span className={`px-1.5 py-0.5 rounded text-[10px] ${p.status === "ACTIVE" ? "bg-emerald-500/15 text-emerald-400" : "bg-yellow-500/15 text-yellow-400"}`}>
+                    <span className={`px-1.5 py-0.5 rounded text-[10px] ${p.status === "ACTIVE" ? "bg-primary/15 text-primary" : "bg-yellow-500/15 text-gold"}`}>
                       {p.status}
                     </span>
                   </span>
@@ -218,7 +218,7 @@ export function AdminView() {
           <Card className="overflow-hidden">
             <div className="overflow-x-auto no-scrollbar">
               <div style={{ minWidth: "500px" }}>
-            <div className="grid grid-cols-5 gap-2 px-4 py-2 text-[10px] uppercase text-muted-foreground border-b border-border">
+            <div className="grid grid-cols-5 gap-2 px-4 py-2 text-[10px] uppercase text-secondary border-b border-border">
               <span>Tier</span>
               <span>Label</span>
               <span className="text-right">30d Volume (USD)</span>
@@ -226,11 +226,11 @@ export function AdminView() {
               <span className="text-right">Taker</span>
             </div>
             {feeSchedules.map((f) => (
-              <div key={f.tier} className="grid grid-cols-5 gap-2 px-4 py-2.5 text-xs items-center border-b border-border/40 tabular hover:bg-muted/20">
+              <div key={f.tier} className="grid grid-cols-5 gap-2 px-4 py-2.5 text-xs items-center border-b border-border/40 tabular hover:bg-elevated/40">
                 <span className="font-medium">T{f.tier}</span>
                 <span>{f.label}</span>
                 <span className="text-right">{fmtUSD(f.volumeUSD)}</span>
-                <span className="text-right text-emerald-400">{f.makerFee === 0 ? "Free" : `${f.makerFee} bps`}</span>
+                <span className="text-right text-primary">{f.makerFee === 0 ? "Free" : `${f.makerFee} bps`}</span>
                 <span className="text-right">{f.takerFee} bps</span>
               </div>
             ))}
@@ -243,25 +243,25 @@ export function AdminView() {
           <Card className="overflow-hidden">
             <div className="px-4 py-2 border-b border-border flex items-center justify-between">
               <span className="text-sm font-semibold">Live Event Stream</span>
-              <span className="text-[10px] text-muted-foreground">NATS JetStream · all subjects</span>
+              <span className="text-[10px] text-secondary">NATS JetStream · all subjects</span>
             </div>
             <div className="max-h-[60vh] overflow-y-auto">
               {events.length === 0 && (
-                <div className="px-4 py-8 text-center text-xs text-muted-foreground">No events yet — place an order to see them flow.</div>
+                <div className="px-4 py-8 text-center text-xs text-secondary">No events yet — place an order to see them flow.</div>
               )}
               {events.map((ev) => (
-                <div key={ev.id} className="px-4 py-1.5 text-xs border-b border-border/40 hover:bg-muted/20 flex items-center gap-3">
-                  <span className="text-[10px] text-muted-foreground tabular w-20">{fmtDateTime(ev.timestamp).split(" ")[1]}</span>
+                <div key={ev.id} className="px-4 py-1.5 text-xs border-b border-border/40 hover:bg-elevated/40 flex items-center gap-3">
+                  <span className="text-[10px] text-secondary tabular w-20">{fmtDateTime(ev.timestamp).split(" ")[1]}</span>
                   <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono ${
                     ev.subject.startsWith("orders") ? "bg-blue-500/15 text-blue-400" :
-                    ev.subject.startsWith("trades") ? "bg-emerald-500/15 text-emerald-400" :
+                    ev.subject.startsWith("trades") ? "bg-primary/15 text-primary" :
                     ev.subject.startsWith("balances") ? "bg-purple-500/15 text-purple-400" :
                     ev.subject.startsWith("deposits") ? "bg-cyan-500/15 text-cyan-400" :
                     "bg-orange-500/15 text-orange-400"
                   }`}>
                     {ev.subject}
                   </span>
-                  <span className="text-[11px] text-muted-foreground font-mono truncate">
+                  <span className="text-[11px] text-secondary font-mono truncate">
                     {JSON.stringify(ev.payload).slice(0, 120)}
                   </span>
                 </div>
@@ -275,15 +275,15 @@ export function AdminView() {
 }
 
 function MetricCard({ icon: Icon, label, value, sub, tone }: { icon: React.ComponentType<{ className?: string }>; label: string; value: string; sub: string; tone?: "up" | "warn" | "down" }) {
-  const color = tone === "up" ? "text-emerald-400" : tone === "warn" ? "text-yellow-400" : tone === "down" ? "text-red-400" : "text-foreground";
+  const color = tone === "up" ? "text-primary" : tone === "warn" ? "text-gold" : tone === "down" ? "text-danger" : "text-foreground";
   return (
     <Card className="p-3 md:p-4">
       <div className="flex items-center justify-between">
-        <span className="text-[10px] uppercase text-muted-foreground tracking-wider">{label}</span>
-        <Icon className="w-4 h-4 text-muted-foreground" />
+        <span className="text-[10px] uppercase text-secondary tracking-wider">{label}</span>
+        <Icon className="w-4 h-4 text-secondary" />
       </div>
       <div className={`text-lg md:text-2xl font-bold tabular mt-1 ${color}`}>{value}</div>
-      <div className="text-[11px] text-muted-foreground mt-0.5">{sub}</div>
+      <div className="text-[11px] text-secondary mt-0.5">{sub}</div>
     </Card>
   );
 }
@@ -291,10 +291,10 @@ function MetricCard({ icon: Icon, label, value, sub, tone }: { icon: React.Compo
 function InfraItem({ name, status, detail }: { name: string; status: string; detail: string }) {
   return (
     <div className="flex items-center gap-2">
-      <span className={`w-2 h-2 rounded-full ${status === "healthy" ? "bg-emerald-400" : "bg-yellow-400"}`} />
+      <span className={`w-2 h-2 rounded-full ${status === "healthy" ? "bg-primary" : "bg-yellow-400"}`} />
       <div className="flex-1 min-w-0">
         <div className="font-medium truncate">{name}</div>
-        <div className="text-[10px] text-muted-foreground truncate">{detail}</div>
+        <div className="text-[10px] text-secondary truncate">{detail}</div>
       </div>
     </div>
   );
@@ -303,10 +303,10 @@ function InfraItem({ name, status, detail }: { name: string; status: string; det
 function ControlRow({ label, value, status }: { label: string; value: string; status: "active" | "planned" }) {
   return (
     <div className="flex items-center justify-between py-1 border-b border-border/40 last:border-0">
-      <span className="text-muted-foreground">{label}</span>
+      <span className="text-secondary">{label}</span>
       <div className="flex items-center gap-2">
         <span className="text-foreground">{value}</span>
-        <span className={`px-1.5 py-0.5 rounded text-[10px] ${status === "active" ? "bg-emerald-500/15 text-emerald-400" : "bg-muted text-muted-foreground"}`}>
+        <span className={`px-1.5 py-0.5 rounded text-[10px] ${status === "active" ? "bg-primary/15 text-primary" : "bg-elevated text-secondary"}`}>
           {status}
         </span>
       </div>

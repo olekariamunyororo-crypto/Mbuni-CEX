@@ -14,7 +14,7 @@ const meta = {
     title: { control: "text", description: "Accessibility label" },
   },
   args: {
-    className: "w-24 h-24 text-emerald-400",
+    className: "w-24 h-24 text-primary",
   },
 } satisfies Meta<typeof OstrichLogo>;
 
@@ -24,11 +24,11 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 export const Small: Story = {
-  args: { className: "w-8 h-8 text-emerald-400" },
+  args: { className: "w-8 h-8 text-primary" },
 };
 
 export const Large: Story = {
-  args: { className: "w-40 h-40 text-emerald-400" },
+  args: { className: "w-40 h-40 text-primary" },
 };
 
 export const OnGradientBackground: Story = {
@@ -46,19 +46,19 @@ export const WhiteOnDark: Story = {
 };
 
 export const EmeraldOnDark: Story = {
-  args: { className: "w-32 h-32 text-emerald-400" },
+  args: { className: "w-32 h-32 text-primary" },
   parameters: { backgrounds: { default: "mbuni-dark" } },
 };
 
 export const RedOnDark: Story = {
   name: "Red (down/sell color)",
-  args: { className: "w-32 h-32 text-red-400" },
+  args: { className: "w-32 h-32 text-danger" },
   parameters: { backgrounds: { default: "mbuni-dark" } },
 };
 
 export const CustomTitle: Story = {
   args: {
-    className: "w-24 h-24 text-emerald-400",
+    className: "w-24 h-24 text-primary",
     title: "Mbuni CEX — Spot Cryptocurrency Exchange",
   },
 };

@@ -68,7 +68,7 @@ export function Sidebar({
         </div>
         <div className="flex flex-col leading-tight">
           <span className="font-bold text-sm tracking-tight">Mbuni CEX</span>
-          <span className="text-[10px] text-muted-foreground uppercase tracking-wider">2026 · v1.0</span>
+          <span className="text-[10px] text-secondary uppercase tracking-wider">2026 · v1.0</span>
         </div>
       </div>
 
@@ -80,10 +80,10 @@ export function Sidebar({
             <button
               key={item.key}
               onClick={() => onChange(item.key)}
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors group ${
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm transition-colors group ${
                 active
-                  ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                  : "text-muted-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
+                  ? "bg-primary/15 text-primary"
+                  : "text-secondary hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
               }`}
             >
               <Icon className="w-4 h-4 shrink-0" />
@@ -98,9 +98,9 @@ export function Sidebar({
 
       <div className="p-3 border-t border-sidebar-border space-y-3">
         <div className="rounded-md bg-sidebar-accent/40 p-3">
-          <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Portfolio Value</div>
+          <div className="text-[10px] uppercase tracking-wider text-secondary">Portfolio Value</div>
           <div className="text-base font-semibold tabular">{fmtUSD(totalUSD)}</div>
-          <div className="text-[10px] text-emerald-400 mt-0.5">+2.4% 24h</div>
+          <div className="text-[10px] text-primary mt-0.5">+2.4% 24h</div>
         </div>
         <div className="flex items-center gap-2 px-1">
           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-xs font-bold text-white">
@@ -108,13 +108,13 @@ export function Sidebar({
           </div>
           <div className="flex-1 min-w-0">
             <div className="text-xs font-medium truncate">{displayName}</div>
-            <div className="text-[10px] text-muted-foreground">Tier {tier} · Verified</div>
+            <div className="text-[10px] text-secondary">Tier {tier} · Verified</div>
           </div>
           <button
             onClick={handleLogout}
             title={confirmLogout ? "Click again to confirm" : "Sign out"}
             className={`p-1.5 rounded transition-colors ${
-              confirmLogout ? "bg-red-500 text-white" : "text-muted-foreground hover:text-foreground hover:bg-sidebar-accent"
+              confirmLogout ? "bg-danger text-white" : "text-secondary hover:text-foreground hover:bg-sidebar-accent"
             }`}
           >
             <LogOut className="w-3.5 h-3.5" />

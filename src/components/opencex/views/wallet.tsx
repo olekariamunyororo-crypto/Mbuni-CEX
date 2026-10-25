@@ -26,24 +26,24 @@ export function WalletView() {
       {/* Portfolio summary */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3">
         <Card className="p-3 md:p-4">
-          <div className="text-[10px] uppercase text-muted-foreground tracking-wider">Total Balance</div>
+          <div className="text-[10px] uppercase text-secondary tracking-wider">Total Balance</div>
           <div className="text-lg md:text-2xl font-bold tabular mt-1">{fmtUSD(totalUSD)}</div>
-          <div className="text-[11px] text-emerald-400 mt-0.5">+2.4% 24h</div>
+          <div className="text-[11px] text-primary mt-0.5">+2.4% 24h</div>
         </Card>
         <Card className="p-3 md:p-4">
-          <div className="text-[10px] uppercase text-muted-foreground tracking-wider">Locked</div>
+          <div className="text-[10px] uppercase text-secondary tracking-wider">Locked</div>
           <div className="text-lg md:text-2xl font-bold tabular mt-1">{fmtUSD(totalLocked)}</div>
-          <div className="text-[11px] text-muted-foreground mt-0.5">{balances.filter((b) => b.locked > 0).length} assets</div>
+          <div className="text-[11px] text-secondary mt-0.5">{balances.filter((b) => b.locked > 0).length} assets</div>
         </Card>
         <Card className="p-3 md:p-4">
-          <div className="text-[10px] uppercase text-muted-foreground tracking-wider">Available</div>
+          <div className="text-[10px] uppercase text-secondary tracking-wider">Available</div>
           <div className="text-lg md:text-2xl font-bold tabular mt-1">{fmtUSD(totalUSD - totalLocked)}</div>
-          <div className="text-[11px] text-muted-foreground mt-0.5">For trading & withdrawal</div>
+          <div className="text-[11px] text-secondary mt-0.5">For trading & withdrawal</div>
         </Card>
         <Card className="p-3 md:p-4">
-          <div className="text-[10px] uppercase text-muted-foreground tracking-wider">Custody Mode</div>
+          <div className="text-[10px] uppercase text-secondary tracking-wider">Custody Mode</div>
           <div className="text-lg md:text-2xl font-bold mt-1">Hybrid</div>
-          <div className="text-[11px] text-muted-foreground mt-0.5">HSM · Passkey · Whitelist</div>
+          <div className="text-[11px] text-secondary mt-0.5">HSM · Passkey · Whitelist</div>
         </Card>
       </div>
 
@@ -58,7 +58,7 @@ export function WalletView() {
         <TabsContent value="balances" className="mt-3">
           {/* Desktop table */}
           <Card className="overflow-hidden hidden md:block">
-            <div className="grid grid-cols-12 gap-2 px-4 py-2 text-[10px] uppercase text-muted-foreground border-b border-border">
+            <div className="grid grid-cols-12 gap-2 px-4 py-2 text-[10px] uppercase text-secondary border-b border-border">
               <span className="col-span-3">Asset</span>
               <span className="col-span-3 text-right">Total</span>
               <span className="col-span-2 text-right">Available</span>
@@ -70,7 +70,7 @@ export function WalletView() {
               {balances.map((b) => {
                 const meta = ASSET_METADATA[b.asset];
                 return (
-                  <div key={b.asset} className="grid grid-cols-12 gap-2 px-4 py-2.5 text-xs items-center border-b border-border/40 tabular hover:bg-muted/20">
+                  <div key={b.asset} className="grid grid-cols-12 gap-2 px-4 py-2.5 text-xs items-center border-b border-border/40 tabular hover:bg-elevated/40">
                     <span className="col-span-3 flex items-center gap-2">
                       <span
                         className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white"
@@ -80,18 +80,18 @@ export function WalletView() {
                       </span>
                       <span className="flex flex-col leading-tight">
                         <span className="font-medium text-sm">{b.asset}</span>
-                        <span className="text-[10px] text-muted-foreground">{meta?.name}</span>
+                        <span className="text-[10px] text-secondary">{meta?.name}</span>
                       </span>
                     </span>
                     <span className="col-span-3 text-right font-medium">{fmtQty(b.free + b.locked, 6)} {b.asset}</span>
                     <span className="col-span-2 text-right">{fmtQty(b.free, 6)}</span>
-                    <span className="col-span-2 text-right text-yellow-400">{fmtQty(b.locked, 6)}</span>
-                    <span className="col-span-1 text-right text-muted-foreground">{fmtUSD(b.usdValue)}</span>
+                    <span className="col-span-2 text-right text-gold">{fmtQty(b.locked, 6)}</span>
+                    <span className="col-span-1 text-right text-secondary">{fmtUSD(b.usdValue)}</span>
                     <span className="col-span-1 flex justify-end gap-1">
                       <Button
                         size="sm"
                         variant="ghost"
-                        className="h-7 px-2 text-[11px] text-emerald-400 hover:text-emerald-300"
+                        className="h-7 px-2 text-[11px] text-primary hover:text-primary-hover"
                         onClick={() => toast.info(`Deposit ${b.asset}`, { description: `Generate ${meta?.chains[0] ?? "chain"} address` })}
                       >
                         <ArrowDownToLine className="w-3 h-3" />
@@ -99,7 +99,7 @@ export function WalletView() {
                       <Button
                         size="sm"
                         variant="ghost"
-                        className="h-7 px-2 text-[11px] text-red-400 hover:text-red-300"
+                        className="h-7 px-2 text-[11px] text-danger hover:text-danger"
                         onClick={() => toast.info(`Withdraw ${b.asset}`)}
                       >
                         <ArrowUpFromLine className="w-3 h-3" />
@@ -127,29 +127,29 @@ export function WalletView() {
                       </span>
                       <div className="flex flex-col leading-tight">
                         <span className="font-medium text-sm">{b.asset}</span>
-                        <span className="text-[10px] text-muted-foreground">{meta?.name}</span>
+                        <span className="text-[10px] text-secondary">{meta?.name}</span>
                       </div>
                     </div>
                     <div className="text-right">
                       <div className="text-sm font-semibold tabular">{fmtUSD(b.usdValue)}</div>
-                      <div className="text-[10px] text-muted-foreground tabular">{fmtQty(b.free + b.locked, 6)} {b.asset}</div>
+                      <div className="text-[10px] text-secondary tabular">{fmtQty(b.free + b.locked, 6)} {b.asset}</div>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-2 mt-3 pt-2 border-t border-border/40 text-[11px]">
                     <div>
-                      <div className="text-[10px] text-muted-foreground uppercase">Available</div>
+                      <div className="text-[10px] text-secondary uppercase">Available</div>
                       <div className="tabular">{fmtQty(b.free, 6)} {b.asset}</div>
                     </div>
                     <div className="text-right">
-                      <div className="text-[10px] text-muted-foreground uppercase">Locked</div>
-                      <div className="tabular text-yellow-400">{fmtQty(b.locked, 6)} {b.asset}</div>
+                      <div className="text-[10px] text-secondary uppercase">Locked</div>
+                      <div className="tabular text-gold">{fmtQty(b.locked, 6)} {b.asset}</div>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-2 mt-2">
                     <Button
                       size="sm"
                       variant="outline"
-                      className="h-8 text-[11px] text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/10"
+                      className="h-8 text-[11px] text-primary border-primary/30 hover:bg-primary/10"
                       onClick={() => toast.info(`Deposit ${b.asset}`, { description: `Generate ${meta?.chains[0] ?? "chain"} address` })}
                     >
                       <ArrowDownToLine className="w-3 h-3 mr-1" /> Deposit
@@ -157,7 +157,7 @@ export function WalletView() {
                     <Button
                       size="sm"
                       variant="outline"
-                      className="h-8 text-[11px] text-red-400 border-red-500/30 hover:bg-red-500/10"
+                      className="h-8 text-[11px] text-danger border-danger/30 hover:bg-danger/10"
                       onClick={() => toast.info(`Withdraw ${b.asset}`)}
                     >
                       <ArrowUpFromLine className="w-3 h-3 mr-1" /> Withdraw
@@ -213,14 +213,14 @@ export function WalletView() {
       {/* Chains info */}
       <Card className="p-4">
         <div className="flex items-center gap-2 mb-3">
-          <Shield className="w-4 h-4 text-emerald-400" />
+          <Shield className="w-4 h-4 text-primary" />
           <span className="text-sm font-semibold">Supported Chains & Confirmation Requirements</span>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
           {CHAINS.map((c) => (
-            <div key={c.id} className="bg-muted/20 rounded p-2">
+            <div key={c.id} className="bg-elevated/40 rounded p-2">
               <div className="text-xs font-medium">{c.name}</div>
-              <div className="text-[10px] text-muted-foreground mt-0.5">
+              <div className="text-[10px] text-secondary mt-0.5">
                 {c.confirmations} confs · {fmtUSD(c.withdrawalFeeUSD)} fee
               </div>
             </div>
@@ -246,7 +246,7 @@ function WhitelistPanel({ whitelist }: { whitelist: ReturnType<typeof useOpenCEX
     <Card className="overflow-hidden">
       <div className="flex items-center justify-between px-4 py-2 border-b border-border">
         <div className="flex items-center gap-2">
-          <Shield className="w-4 h-4 text-emerald-400" />
+          <Shield className="w-4 h-4 text-primary" />
           <span className="text-sm font-semibold">Whitelisted Withdrawal Addresses</span>
         </div>
         <Button size="sm" variant="outline" onClick={() => setAdding(!adding)}>
@@ -255,7 +255,7 @@ function WhitelistPanel({ whitelist }: { whitelist: ReturnType<typeof useOpenCEX
       </div>
 
       {adding && (
-        <div className="p-3 bg-muted/20 border-b border-border grid grid-cols-1 md:grid-cols-5 gap-2">
+        <div className="p-3 bg-elevated/40 border-b border-border grid grid-cols-1 md:grid-cols-5 gap-2">
           <select
             value={form.asset}
             onChange={(e) => setForm({ ...form, asset: e.target.value })}
@@ -304,7 +304,7 @@ function WhitelistPanel({ whitelist }: { whitelist: ReturnType<typeof useOpenCEX
 
       <div className="overflow-x-auto no-scrollbar">
         <div style={{ minWidth: "640px" }}>
-          <div className="grid grid-cols-12 gap-2 px-4 py-2 text-[10px] uppercase text-muted-foreground border-b border-border">
+          <div className="grid grid-cols-12 gap-2 px-4 py-2 text-[10px] uppercase text-secondary border-b border-border">
             <span className="col-span-2">Asset</span>
             <span className="col-span-2">Chain</span>
             <span className="col-span-4">Address</span>
@@ -314,13 +314,13 @@ function WhitelistPanel({ whitelist }: { whitelist: ReturnType<typeof useOpenCEX
           </div>
           <div>
             {whitelist.map((w) => (
-              <div key={w.id} className="grid grid-cols-12 gap-2 px-4 py-2 text-xs items-center border-b border-border/40 tabular hover:bg-muted/20">
+              <div key={w.id} className="grid grid-cols-12 gap-2 px-4 py-2 text-xs items-center border-b border-border/40 tabular hover:bg-elevated/40">
                 <span className="col-span-2 font-medium">{w.asset}</span>
-                <span className="col-span-2 text-muted-foreground">{w.chain}</span>
+                <span className="col-span-2 text-secondary">{w.chain}</span>
                 <span className="col-span-4 font-mono text-[11px]">{shortAddr(w.address, 10, 8)}</span>
-                <span className="col-span-2 text-muted-foreground">{w.label}</span>
-                <span className="col-span-1 text-yellow-400">{w.timeLockHours}h</span>
-                <span className="col-span-1 text-muted-foreground text-[10px]">{new Date(w.addedAt).toLocaleDateString()}</span>
+                <span className="col-span-2 text-secondary">{w.label}</span>
+                <span className="col-span-1 text-gold">{w.timeLockHours}h</span>
+                <span className="col-span-1 text-secondary text-[10px]">{new Date(w.addedAt).toLocaleDateString()}</span>
               </div>
             ))}
           </div>
@@ -344,17 +344,17 @@ function TxTable<T extends { id: string; timestamp: number }>({ rows, columns }:
     <div>
       <div className="overflow-x-auto no-scrollbar">
         <div style={{ minWidth: `${minRowWidth}px` }}>
-          <div className="grid gap-2 px-4 py-2 text-[10px] uppercase text-muted-foreground border-b border-border" style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))` }}>
+          <div className="grid gap-2 px-4 py-2 text-[10px] uppercase text-secondary border-b border-border" style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))` }}>
             {columns.map((c) => (
               <span key={c.key} className={c.right ? "text-right" : ""}>{c.label}</span>
             ))}
           </div>
           <div className="max-h-[60vh] overflow-y-auto">
-            {rows.length === 0 && <div className="px-4 py-8 text-center text-xs text-muted-foreground">No records</div>}
+            {rows.length === 0 && <div className="px-4 py-8 text-center text-xs text-secondary">No records</div>}
             {rows.map((row) => (
               <div
                 key={row.id}
-                className="grid gap-2 px-4 py-2 text-xs items-center border-b border-border/40 tabular hover:bg-muted/20"
+                className="grid gap-2 px-4 py-2 text-xs items-center border-b border-border/40 tabular hover:bg-elevated/40"
                 style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))` }}
               >
                 {columns.map((c) => (
@@ -371,16 +371,16 @@ function TxTable<T extends { id: string; timestamp: number }>({ rows, columns }:
 
 function StatusBadge({ status }: { status: string }) {
   const colorMap: Record<string, string> = {
-    PENDING: "bg-yellow-500/15 text-yellow-400",
+    PENDING: "bg-yellow-500/15 text-gold",
     CONFIRMED: "bg-blue-500/15 text-blue-400",
-    CREDITED: "bg-emerald-500/15 text-emerald-400",
+    CREDITED: "bg-primary/15 text-primary",
     APPROVED: "bg-blue-500/15 text-blue-400",
     PROCESSING: "bg-purple-500/15 text-purple-400",
-    COMPLETED: "bg-emerald-500/15 text-emerald-400",
-    REJECTED: "bg-red-500/15 text-red-400",
+    COMPLETED: "bg-primary/15 text-primary",
+    REJECTED: "bg-danger/15 text-danger",
   };
   return (
-    <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${colorMap[status] ?? "bg-muted text-muted-foreground"}`}>
+    <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${colorMap[status] ?? "bg-elevated text-secondary"}`}>
       {status}
     </span>
   );

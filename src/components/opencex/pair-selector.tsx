@@ -33,7 +33,7 @@ export function PairSelector() {
     <div className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 px-2 md:px-3 py-1.5 rounded hover:bg-muted/50 min-w-[140px] md:min-w-[180px]"
+        className="flex items-center gap-2 px-2 md:px-3 py-1.5 rounded hover:bg-elevated/70 min-w-[140px] md:min-w-[180px]"
       >
         {active && (
           <div className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white"
@@ -44,12 +44,12 @@ export function PairSelector() {
         <div className="flex flex-col items-start leading-tight">
           <span className="text-sm font-semibold">{activePair}</span>
           {ticker && (
-            <span className={`text-[10px] tabular ${ticker.priceChangePct >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+            <span className={`text-[10px] tabular ${ticker.priceChangePct >= 0 ? "text-primary" : "text-danger"}`}>
               {fmtPrice(ticker.lastPrice, 2)} · {fmtPct(ticker.priceChangePct)}
             </span>
           )}
         </div>
-        <ChevronDown className="w-4 h-4 ml-1 text-muted-foreground" />
+        <ChevronDown className="w-4 h-4 ml-1 text-secondary" />
       </button>
 
       {open && (
@@ -58,7 +58,7 @@ export function PairSelector() {
           <div className="absolute z-50 mt-1 left-0 w-[calc(100vw-1.5rem)] max-w-[420px] bg-popover border border-border rounded-md shadow-xl">
             <div className="p-2 border-b border-border">
               <div className="flex items-center gap-2 px-2 py-1 bg-input rounded">
-                <Search className="w-3.5 h-3.5 text-muted-foreground" />
+                <Search className="w-3.5 h-3.5 text-secondary" />
                 <input
                   autoFocus
                   value={q}
@@ -68,7 +68,7 @@ export function PairSelector() {
                 />
               </div>
             </div>
-            <div className="grid grid-cols-5 gap-2 px-3 py-1.5 text-[10px] uppercase text-muted-foreground border-b border-border">
+            <div className="grid grid-cols-5 gap-2 px-3 py-1.5 text-[10px] uppercase text-secondary border-b border-border">
               <span className="col-span-2">Pair</span>
               <span className="text-right">Last Price</span>
               <span className="text-right">24h Change</span>
@@ -84,13 +84,13 @@ export function PairSelector() {
                       setActivePair(p.symbol);
                       setOpen(false);
                     }}
-                    className={`w-full grid grid-cols-5 gap-2 px-3 py-1.5 text-xs hover:bg-muted/40 items-center tabular ${
-                      p.symbol === activePair ? "bg-muted/40" : ""
+                    className={`w-full grid grid-cols-5 gap-2 px-3 py-1.5 text-xs hover:bg-elevated/60 items-center tabular ${
+                      p.symbol === activePair ? "bg-elevated/60" : ""
                     }`}
                   >
                     <span className="col-span-2 flex items-center gap-2">
                       <Star
-                        className={`w-3 h-3 ${favorites.has(p.symbol) ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground"}`}
+                        className={`w-3 h-3 ${favorites.has(p.symbol) ? "fill-gold text-gold" : "text-secondary"}`}
                         onClick={(e) => toggleFav(p.symbol, e)}
                       />
                       <span
@@ -102,10 +102,10 @@ export function PairSelector() {
                       <span className="font-medium">{p.symbol}</span>
                     </span>
                     <span className="text-right">{t ? fmtPrice(t.lastPrice, p.priceDecimals) : "—"}</span>
-                    <span className={`text-right ${t && t.priceChangePct >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                    <span className={`text-right ${t && t.priceChangePct >= 0 ? "text-primary" : "text-danger"}`}>
                       {t ? fmtPct(t.priceChangePct) : "—"}
                     </span>
-                    <span className="text-right text-muted-foreground">{t ? fmtCompact(t.quoteVolume) : "—"}</span>
+                    <span className="text-right text-secondary">{t ? fmtCompact(t.quoteVolume) : "—"}</span>
                   </button>
                 );
               })}

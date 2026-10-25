@@ -27,7 +27,7 @@ export const TRADING_PAIRS: TradingPair[] = [
 ];
 
 export const INITIAL_PRICES: Record<string, number> = {
-  "BTC/USDT": 67250.5,
+  "BTC/USDT": 80835.61,
   "ETH/USDT": 3245.8,
   "SOL/USDT": 178.42,
   "BNB/USDT": 605.2,
@@ -59,7 +59,7 @@ export const ASSET_METADATA: Record<string, { name: string; color: string; chain
 
 export const INITIAL_BALANCES: Balance[] = [
   { asset: "USDT", free: 245680.42, locked: 4200.0, usdValue: 245680.42 },
-  { asset: "BTC", free: 3.4521, locked: 0.05, usdValue: 3.4521 * 67250.5 },
+  { asset: "BTC", free: 3.4521, locked: 0.05, usdValue: 3.4521 * 80835.61 },
   { asset: "ETH", free: 42.18, locked: 1.2, usdValue: 42.18 * 3245.8 },
   { asset: "SOL", free: 380.5, locked: 0, usdValue: 380.5 * 178.42 },
   { asset: "ARB", free: 12500, locked: 0, usdValue: 12500 * 0.7821 },

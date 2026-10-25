@@ -26,7 +26,7 @@ type Story = StoryObj<typeof meta>;
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex justify-between items-center py-2 border-b border-border/40 last:border-0">
-      <span className="text-xs text-muted-foreground">{label}</span>
+      <span className="text-xs text-secondary">{label}</span>
       <span className="text-sm font-medium tabular text-foreground">{value}</span>
     </div>
   );
@@ -35,7 +35,7 @@ function Row({ label, value }: { label: string; value: string }) {
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="bg-card border border-border rounded-lg p-4 min-w-[280px]">
-      <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">{title}</h3>
+      <h3 className="text-xs font-semibold uppercase tracking-wider text-secondary mb-3">{title}</h3>
       <div className="space-y-0">{children}</div>
     </div>
   );
