@@ -85,3 +85,4 @@ infra/k8s/sealed-secret.yaml
 # Playwright visual regression baselines ARE committed (so diffs are caught in PRs)
 # — but the .cache dir above is not.mbuni-cex.zip
 package-lock.json
+package-lock.json
