@@ -14,14 +14,14 @@ echo "── Mbuni CEX pre-commit ───────────────�
 
 # 1. Lint staged files
 echo "› Linting staged files (lint-staged)…"
-bunx lint-staged || {
+npx lint-staged || {
   echo "✗ lint-staged failed. Fix the issues above or run 'git commit --no-verify' to bypass."
   exit 1
 }
 
 # 2. Unit tests (fast — ~500ms)
 echo "› Running unit tests (vitest)…"
-bun run test:unit > /dev/null 2>&1 || {
+npm run test:unit > /dev/null 2>&1 || {
   echo "✗ Unit tests failed. Run 'bun run test:unit' to see failures."
   echo "  Bypass with 'git commit --no-verify' (CI will still check)."
   exit 1
