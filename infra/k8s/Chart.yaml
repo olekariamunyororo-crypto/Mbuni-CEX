@@ -1,20 +1,19 @@
 apiVersion: v2
 name: mbuni-cex
-description: Mbuni CEX — modern spot cryptocurrency exchange (Next.js 16 + Prisma + NextAuth)
+description: Mbuni CEX — modern high-performance spot cryptocurrency exchange
 type: application
 version: 1.0.0
 appVersion: "1.0.0"
 keywords:
-  - cryptocurrency
+  - cex
+  - crypto
   - exchange
-  - clob
   - trading
   - nextjs
   - react
-home: https://github.com/your-org/mbuni-cex
+home: https://github.com/olekariamunyororo-crypto/Mbuni-CEX
 sources:
-  - https://github.com/your-org/mbuni-cex
+  - https://github.com/olekariamunyororo-crypto/Mbuni-CEX
 maintainers:
-  - name: Mbuni CEX Team
-    url: https://github.com/your-org/mbuni-cex
-icon: https://raw.githubusercontent.com/your-org/mbuni-cex/main/public/ostrich.svg
+  - name: olekariamunyororo-crypto
+    email: olekariamunyororo@gmail.com
