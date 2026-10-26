@@ -1,10 +1,14 @@
 // Mbuni CEX — NextAuth configuration
-// JWT strategy with Credentials provider backed by Prisma (SQLite)
+// JWT strategy with Credentials provider backed by Prisma
 
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
+import { rateLimit } from "@/lib/auth/rate-limit";
+
+const LOGIN_LIMIT = 20;
+const LOGIN_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -21,6 +25,14 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
         const email = credentials.email.toLowerCase().trim();
+
+        const limited = rateLimit(`login:${email}`, LOGIN_LIMIT, LOGIN_WINDOW_MS);
+        if (!limited.ok) {
+          // Return null so NextAuth treats as failed credentials without leaking rate-limit detail
+          console.warn(`[auth] rate-limited login for ${email}`);
+          return null;
+        }
+
         const user = await db.user.findUnique({ where: { email } });
         if (!user || !user.passwordHash) return null;
         const valid = await bcrypt.compare(credentials.password, user.passwordHash);
