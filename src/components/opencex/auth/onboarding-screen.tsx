@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
@@ -19,6 +19,7 @@ import { useOpenCEX } from "@/lib/opencex/store";
 import { ASSET_METADATA } from "@/lib/opencex/seed";
 import { OstrichLogo } from "@/components/opencex/ostrich-logo";
 import { toast } from "sonner";
+import { track, AnalyticsEvents } from "@/lib/analytics/mixpanel";
 
 type Experience = "NOVICE" | "INTERMEDIATE" | "PRO" | "INSTITUTIONAL";
 
@@ -51,6 +52,13 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
   });
   const [saving, setSaving] = useState(false);
 
+  useEffect(() => {
+    track(AnalyticsEvents.ONBOARDING_STEP_VIEWED, {
+      step_index: step,
+      step_name: STEPS[step],
+    });
+  }, [step]);
+
   const togglePair = (sym: string) => {
     setPrefs((p) => ({
       ...p,
@@ -79,6 +87,12 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
         setSaving(false);
         return;
       }
+      track(AnalyticsEvents.ONBOARDING_COMPLETED, {
+        experience: prefs.experience,
+        followed_pairs_count: prefs.followedPairs.length,
+        enable_2fa: prefs.enable2FA,
+        passkey_enrolled: prefs.passkeyEnrolled,
+      });
       toast.success("Onboarding complete · welcome to Mbuni CEX");
       setTimeout(onComplete, 300);
     } catch (e) {

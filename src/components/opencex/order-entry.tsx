@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { useOpenCEX } from "@/lib/opencex/store";
 import { fmtPrice, fmtQty } from "@/lib/opencex/format";
 import type { OrderType, Side } from "@/lib/opencex/types";
 import { toast } from "sonner";
+import { track, AnalyticsEvents } from "@/lib/analytics/mixpanel";
 
 const ORDER_TYPES: { key: OrderType; label: string; hint: string }[] = [
   { key: "LIMIT", label: "Limit", hint: "Rest on book at price" },
@@ -44,7 +45,6 @@ export function OrderEntry({ pair, initialSide, onSubmitted }: { pair: string; i
   const effectiveQty = parseFloat(qty) || 0;
   const cost = effectivePrice ? effectivePrice * effectiveQty : 0;
 
-  const availableForOrder = isBuy ? quoteBalance : baseBalance;
   const maxQty = isBuy
     ? effectivePrice && effectivePrice > 0
       ? quoteBalance / effectivePrice
@@ -71,9 +71,22 @@ export function OrderEntry({ pair, initialSide, onSubmitted }: { pair: string; i
     const res = placeOrder({ pair, side, type, price: effectivePrice, qty: effectiveQty });
     setSubmitting(false);
     if (!res.ok) {
+      track(AnalyticsEvents.ORDER_REJECTED, {
+        pair,
+        side,
+        order_type: type,
+        reason: res.reason ?? "unknown",
+      });
       toast.error(res.reason ?? "Order rejected");
       return;
     }
+    track(AnalyticsEvents.ORDER_PLACED, {
+      pair,
+      side,
+      order_type: type,
+      qty: effectiveQty,
+      price: effectivePrice ?? 0,
+    });
     toast.success(`${side} ${type} order placed`, {
       description: `${fmtQty(effectiveQty, p?.baseDecimals ?? 4)} ${baseAsset} @ ${effectivePrice ? fmtPrice(effectivePrice, p?.priceDecimals ?? 2) : "market"}`,
     });

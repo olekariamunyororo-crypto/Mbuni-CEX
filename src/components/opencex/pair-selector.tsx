@@ -5,6 +5,7 @@ import { fmtPrice, fmtPct, fmtCompact } from "@/lib/opencex/format";
 import { useState } from "react";
 import { ChevronDown, Search, Star } from "lucide-react";
 import { ASSET_METADATA } from "@/lib/opencex/seed";
+import { track, AnalyticsEvents } from "@/lib/analytics/mixpanel";
 
 export function PairSelector() {
   const pairs = useOpenCEX((s) => s.pairs);
@@ -82,6 +83,7 @@ export function PairSelector() {
                     key={p.symbol}
                     onClick={() => {
                       setActivePair(p.symbol);
+                      track(AnalyticsEvents.PAIR_SELECTED, { pair: p.symbol, source: "pair_selector" });
                       setOpen(false);
                     }}
                     className={`w-full grid grid-cols-5 gap-2 px-3 py-1.5 text-xs hover:bg-elevated/60 items-center tabular ${
