@@ -201,6 +201,8 @@ chore(deps): bump next to 16.1.1
 
 Keep the summary ≤ 72 characters. Use the body for *why*, not *what*.
 
+Breaking changes: add `!` after the type/scope (`feat(engine)!: change fill event shape`) and a `BREAKING CHANGE:` footer.
+
 ---
 
 ## Pull Request Process
@@ -221,6 +223,7 @@ Keep the summary ≤ 72 characters. Use the body for *why*, not *what*.
 - [ ] Docs updated if user-facing or ops-facing
 - [ ] No secrets committed; `.env` stays local
 - [ ] Schema changes include a migration under `prisma/migrations/`
+- [ ] CHANGELOG.md updated for user-visible changes
 
 ---
 
@@ -249,6 +252,10 @@ bun run test
 | Visual components | Storybook stories + optional visual regression |
 
 When you change the engine, add or extend tests that lock the behavior (especially edge cases: FOK with insufficient liquidity, POST_ONLY that would cross, fee rounding).
+
+### Property tests
+
+The engine uses `fast-check` for property-based tests. Prefer properties that must always hold (conservation of quantity, no negative balances, price-time priority) over one-off examples alone.
 
 ---
 
@@ -296,24 +303,28 @@ Release process: move Unreleased entries into a versioned section when tagging.
 - Source of truth: `src/lib/opencex/engine.ts` + types in `types.ts`
 - Keep price-time priority and order-type semantics intact
 - Property tests should still pass after changes
+- Avoid leaking floating-point money math into balances
 
 ### Auth & Sessions
 
 - NextAuth config: `src/lib/auth/config.ts`
 - API: `src/app/api/auth/`, `signup`, `onboarding`, `session`
 - Passwords: bcrypt only; never log secrets
+- Session strategy is JWT; be careful with claims shape
 
 ### UI Components
 
 - App shell and terminal: `src/components/opencex/`
 - Primitives: `src/components/ui/` (shadcn-style)
 - Prefer existing tokens/classes over one-off colors
+- Mobile + desktop layouts both matter
 
 ### Infra / Helm / Docker
 
 - Chart: `infra/k8s/`
 - Workflows: `.github/workflows/`
 - Image defaults should stay pointed at `ghcr.io/olekariamunyororo-crypto/mbuni-cex` unless intentionally changing the publish target
+- Secrets via env / sealed secrets — never hardcoded
 
 ---
 
@@ -324,6 +335,8 @@ Release process: move Unreleased entries into a versioned section when tagging.
 3. Tag: `git tag -a vX.Y.Z -m "vX.Y.Z"` and push tags
 4. GitHub Actions / release notes as configured in the repo
 
+Breaking changes and security fixes should be called out in the changelog / release notes.
+
 ---
 
 ## Getting Help
@@ -332,4 +345,4 @@ Release process: move Unreleased entries into a versioned section when tagging.
 - **Questions:** [GitHub Discussions](https://github.com/olekariamunyororo-crypto/Mbuni-CEX/discussions)
 - **Security:** [Security advisories](https://github.com/olekariamunyororo-crypto/Mbuni-CEX/security/advisories/new) — do **not** open a public issue for vulnerabilities
 
-Welcome aboard — ship carefully, test the engine, and keep the ostrich flying. 🦬
+Thanks for building Mbuni CEX with us. 🦬
