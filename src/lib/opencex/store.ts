@@ -68,9 +68,21 @@ interface MbuniCEXState {
   engineInterval: ReturnType<typeof setInterval> | null;
   started: boolean;
 
+  // Live data (Binance WebSocket feed)
+  liveMode: boolean;
+  feedConnected: boolean;
+  feed: unknown;
+
   // Actions
   init: () => void;
   setActivePair: (symbol: string) => void;
+  setLiveMode: (enabled: boolean) => void;
+  setFeedConnected: (connected: boolean) => void;
+  setFeed: (feed: unknown) => void;
+  updateBookFromBinance: (pair: string, bids: Array<[number, number]>, asks: Array<[number, number]>) => void;
+  updateTradeFromBinance: (pair: string, price: number, qty: number, side: "BUY" | "SELL", timestamp: number) => void;
+  updateTickerFromBinance: (pair: string, lastPrice: number, priceChangePct: number, high: number, low: number, volume: number, quoteVolume: number) => void;
+  updateKlineFromBinance: (pair: string, openTime: number, open: number, high: number, low: number, close: number, volume: number, isClosed: boolean) => void;
   placeOrder: (params: { pair: string; side: Side; type: Order["type"]; price: number | null; qty: number }) => { ok: boolean; reason?: string; order?: Order };
   cancelOrder: (orderId: string) => void;
   requestWithdrawal: (params: { asset: string; chain: string; amount: number; address: string }) => { ok: boolean; reason?: string };
@@ -127,6 +139,11 @@ export const useOpenCEX = create<MbuniCEXState>((set, get) => ({
   engines: {},
   engineInterval: null,
   started: false,
+
+  // Live data defaults
+  liveMode: false,
+  feedConnected: false,
+  feed: null,
 
   init: () => {
     if (get().started) return;
