@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Mail, Lock, User, Eye, EyeOff, Fingerprint, Loader2, ArrowLeft, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 import { OstrichLogo } from "@/components/opencex/ostrich-logo";
+import { track, AnalyticsEvents } from "@/lib/analytics/mixpanel";
 
 type Mode = "login" | "signup";
 
@@ -23,6 +24,7 @@ export function AuthScreen({ onComplete, onBack }: { onComplete: () => void; onB
     if (loading) return;
 
     if (mode === "signup") {
+      track(AnalyticsEvents.SIGNUP_STARTED);
       setLoading(true);
       try {
         const res = await fetch("/api/signup", {
@@ -36,6 +38,7 @@ export function AuthScreen({ onComplete, onBack }: { onComplete: () => void; onB
           setLoading(false);
           return;
         }
+        track(AnalyticsEvents.SIGNUP_COMPLETED);
         toast.success("Account created · signing you in…");
       } catch (err) {
         toast.error((err as Error).message);
@@ -52,10 +55,12 @@ export function AuthScreen({ onComplete, onBack }: { onComplete: () => void; onB
     });
     setLoading(false);
     if (result?.error) {
+      track(AnalyticsEvents.LOGIN_FAILED, { mode });
       toast.error("Invalid email or password");
       return;
     }
     if (result?.ok) {
+      track(AnalyticsEvents.LOGIN_COMPLETED, { mode });
       toast.success(mode === "signup" ? "Welcome to Mbuni CEX" : "Welcome back");
       // Brief delay so JWT mint completes before onComplete reads session
       setTimeout(onComplete, 200);
@@ -69,6 +74,7 @@ export function AuthScreen({ onComplete, onBack }: { onComplete: () => void; onB
     toast.info("Passkey prompt", { description: "Authenticating with device biometrics…" });
     setTimeout(() => {
       setPasskeyLoading(false);
+      track(AnalyticsEvents.PASSKEY_SIGNIN);
       toast.success("Passkey verified · welcome back");
       onComplete();
     }, 1500);

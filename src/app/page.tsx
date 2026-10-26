@@ -16,6 +16,7 @@ import { SplashScreen } from "@/components/opencex/auth/splash-screen";
 import { WelcomeScreen } from "@/components/opencex/auth/welcome-screen";
 import { AuthScreen } from "@/components/opencex/auth/auth-screen";
 import { OnboardingScreen } from "@/components/opencex/auth/onboarding-screen";
+import { track, resetAnalytics, AnalyticsEvents } from "@/lib/analytics/mixpanel";
 
 export type ViewKey =
   | "markets"
@@ -67,9 +68,15 @@ export default function Home() {
     stage = "welcome";
   }
 
-  const handleSplashDone = useCallback(() => setSplashDone(true), []);
+  const handleSplashDone = useCallback(() => {
+    track(AnalyticsEvents.SPLASH_COMPLETED);
+    setSplashDone(true);
+  }, []);
 
-  const handleWelcomeComplete = useCallback(() => setManualStage("auth"), []);
+  const handleWelcomeComplete = useCallback(() => {
+    track(AnalyticsEvents.WELCOME_COMPLETED);
+    setManualStage("auth");
+  }, []);
   const handleAuthComplete = useCallback(() => {
     // After successful login, fall back to computed stage (which will now be
     // onboarding or app depending on the user's state).
@@ -78,7 +85,14 @@ export default function Home() {
   const handleAuthBack = useCallback(() => setManualStage("welcome"), []);
   const handleOnboardingComplete = useCallback(() => setManualStage("app"), []);
   const handleLogout = useCallback(() => {
+    track(AnalyticsEvents.LOGOUT);
+    resetAnalytics();
     setManualStage("welcome");
+  }, []);
+
+  const handleChangeView = useCallback((v: ViewKey) => {
+    track(AnalyticsEvents.VIEW_CHANGED, { view: v });
+    setView(v);
   }, []);
 
   // Stage: Splash
@@ -105,7 +119,7 @@ export default function Home() {
   return (
     <AppShell
       view={view}
-      onChangeView={setView}
+      onChangeView={handleChangeView}
       onLogout={handleLogout}
       sessionUser={session?.user as SessionUserLike | undefined}
     />
@@ -135,6 +149,7 @@ function AppShell({
             <MarketsView
               onOpenTrading={(p) => {
                 useOpenCEX.getState().setActivePair(p);
+                track(AnalyticsEvents.PAIR_SELECTED, { pair: p, source: "markets" });
                 onChangeView("trading");
               }}
             />
