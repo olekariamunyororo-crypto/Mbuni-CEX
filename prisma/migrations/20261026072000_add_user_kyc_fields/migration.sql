@@ -1,0 +1,7 @@
+-- AlterTable: KYC fields required by schema after feat(kyc)
+ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "kycDocumentType" TEXT;
+ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "kycDocumentNumber" TEXT;
+ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "kycSubmittedAt" TIMESTAMP(3);
+ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "kycVerifiedAt" TIMESTAMP(3);
+ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "kycRejectReason" TEXT;
+ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "kycAttemptCount" INTEGER NOT NULL DEFAULT 0;
