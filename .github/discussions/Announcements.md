@@ -1,32 +1,29 @@
-<!--
-Announcements category — for maintainers to post project news.
-Mostly read-only (only maintainers can create new threads, anyone can reply).
+## Announcement
 
-Examples:
-  - Release announcements (v1.1.0 shipped!)
-  - Roadmap updates
-  - Breaking change previews
-  - Community events (office hours, conference talks)
--->
+**Title:** <!-- e.g. Mbuni CEX v1.1.0 released -->
 
-## What's the announcement?
+**Date:** <!-- YYYY-MM-DD -->
 
-<!-- One-sentence summary, e.g. "Mbuni CEX v1.1.0 is now available" -->
+### Summary
 
-## Details
+<!-- 2–3 sentences describing what shipped and why it matters. -->
 
-<!-- The body of the announcement. -->
+### Highlights
 
-## What you need to do
+- 
+- 
+- 
 
-<!-- If this is a release with breaking changes, what should users do to upgrade? -->
+### Breaking changes
 
-## Links
+<!-- List any breaking changes, or write "None". -->
 
-- **Release notes**: <!-- https://github.com/your-org/mbuni-cex/releases/tag/v1.1.0 -->
-- **Changelog**: <!-- https://github.com/your-org/mbuni-cex/blob/main/CHANGELOG.md -->
-- **Docs**: <!-- https://your-org.github.io/mbuni-cex/ -->
+### Upgrade notes
 
-## Feedback
+<!-- Steps users need to take after upgrading, or write "None". -->
 
-<!-- Reply to this thread with questions, comments, or feedback. -->
+### Links
+
+- **Release notes**: https://github.com/olekariamunyororo-crypto/Mbuni-CEX/releases
+- **Changelog**: https://github.com/olekariamunyororo-crypto/Mbuni-CEX/blob/main/CHANGELOG.md
+- **Docs**: https://olekariamunyororo-crypto.github.io/Mbuni-CEX/
