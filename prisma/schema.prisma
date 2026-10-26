@@ -16,6 +16,12 @@ model User {
   name               String?
   passwordHash       String?
   kycStatus          String           @default("NONE")
+  kycDocumentType    String?
+  kycDocumentNumber  String?
+  kycSubmittedAt     DateTime?
+  kycVerifiedAt      DateTime?
+  kycRejectReason    String?
+  kycAttemptCount    Int              @default(0)
   tier               Int              @default(0)
   twoFA              Boolean          @default(false)
   passkey            Boolean          @default(false)

@@ -16,6 +16,7 @@ import { SplashScreen } from "@/components/opencex/auth/splash-screen";
 import { WelcomeScreen } from "@/components/opencex/auth/welcome-screen";
 import { AuthScreen } from "@/components/opencex/auth/auth-screen";
 import { OnboardingScreen } from "@/components/opencex/auth/onboarding-screen";
+import { KycScreen } from "@/components/opencex/auth/kyc-screen";
 import { track, resetAnalytics, AnalyticsEvents } from "@/lib/analytics/mixpanel";
 
 export type ViewKey =
@@ -26,13 +27,14 @@ export type ViewKey =
   | "admin"
   | "architecture";
 
-type FlowStage = "splash" | "welcome" | "auth" | "onboarding" | "app";
+type FlowStage = "splash" | "welcome" | "auth" | "onboarding" | "kyc" | "app";
 
 interface SessionUserLike {
   email?: string | null;
   name?: string | null;
   onboardingComplete?: boolean;
   tier?: number;
+  kycStatus?: string;
 }
 
 export default function Home() {
@@ -63,7 +65,13 @@ export default function Home() {
   } else if (manualStage) {
     stage = manualStage;
   } else if (status === "authenticated" && session?.user) {
-    stage = session.user.onboardingComplete ? "app" : "onboarding";
+    if (!session.user.onboardingComplete) {
+      stage = "onboarding";
+    } else if (session.user.kycStatus !== "VERIFIED") {
+      stage = "kyc";
+    } else {
+      stage = "app";
+    }
   } else {
     stage = "welcome";
   }
@@ -83,7 +91,8 @@ export default function Home() {
     setManualStage(null);
   }, []);
   const handleAuthBack = useCallback(() => setManualStage("welcome"), []);
-  const handleOnboardingComplete = useCallback(() => setManualStage("app"), []);
+  const handleOnboardingComplete = useCallback(() => setManualStage("kyc"), []);
+  const handleKycComplete = useCallback(() => setManualStage("app"), []);
   const handleLogout = useCallback(() => {
     track(AnalyticsEvents.LOGOUT);
     resetAnalytics();
@@ -113,6 +122,11 @@ export default function Home() {
   // Stage: Onboarding
   if (stage === "onboarding") {
     return <OnboardingScreen onComplete={handleOnboardingComplete} />;
+
+  // Stage: KYC verification
+  if (stage === "kyc") {
+    return <KycScreen onComplete={handleKycComplete} />;
+  }
   }
 
   // Stage: App
