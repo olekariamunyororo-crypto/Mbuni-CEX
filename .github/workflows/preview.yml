@@ -181,7 +181,7 @@ jobs:
       # ----- Comment on the PR with the preview URL -----
       - name: Find existing preview comment
         id: find-comment
-        uses: peter-evans/find-comment@v3
+        uses: peter-evans/find-comment@v4
         with:
           issue-number: ${{ steps.vars.outputs.pr_number }}
           comment-author: github-actions[bot]
